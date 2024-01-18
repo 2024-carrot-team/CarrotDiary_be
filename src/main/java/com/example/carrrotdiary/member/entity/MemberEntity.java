@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class MemberEntity {
 
 
+
     @Id
     @GeneratedValue()
     private long id;

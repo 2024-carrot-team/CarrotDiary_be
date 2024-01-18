@@ -42,6 +42,7 @@ public class JwtUtils {
         byte[] bytes = secretKey.getBytes(); // 환경설정으로 변경예정
         key = Keys.hmacShaKeyFor(bytes);
     }
+
     //JWT 생성
     public String createToken(String username, Role role) {
         Date date = new Date();
