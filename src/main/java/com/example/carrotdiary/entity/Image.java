@@ -8,30 +8,28 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import java.util.List;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-public class Post extends BaseTimeEntity{
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Image {
 
     @Id
     @GeneratedValue
-    @Column(name = "post_id")
+    @Column(name = "image_id")
     private Long id;
 
-    private String title;
+    private String imageUrl;
+
+    @OneToOne(mappedBy = "image", fetch = LAZY)
+    private Post post;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "diary_id")
+    private Diary diary;
 
-    @OneToMany(mappedBy = "post")
-    private List<PostDiary> postDiary;
-
-    @OneToOne(fetch = LAZY)
-    @JoinColumn(name = "post_id")
-    private Image image;
 }
