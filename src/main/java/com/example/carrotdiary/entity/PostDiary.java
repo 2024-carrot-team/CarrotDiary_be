@@ -9,10 +9,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostDiary extends BaseTimeEntity {
 
     @Id
@@ -26,6 +29,21 @@ public class PostDiary extends BaseTimeEntity {
 
     @OneToMany
     private List<Diary> diaries = new ArrayList<>();
+
+    // 연관관계 편의 메서드
+    public void setPost(Post post) {
+        this.post = post;
+        post.getPostDiary().add(this);
+    }
+
+
+    // 생성 메서드
+    public static PostDiary createPostDiary(Post post) {
+        PostDiary postDiary = new PostDiary();
+        postDiary.setPost(post);
+
+        return postDiary;
+    }
 
 
 }

@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,11 +24,23 @@ public class Image {
 
     private String imageUrl;
 
-    @OneToOne(mappedBy = "image", fetch = LAZY)
-    private Post post;
-
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "diary_id")
     private Diary diary;
+
+    // 연관관계 편의 메서드
+    public void setDiary(Diary diary) {
+        this.diary = diary;
+        diary.getImages().add(this);
+    }
+
+    // 생성 메서드
+    public static Image createImage(String imageUrl, Diary diary) {
+        Image image = new Image();
+        image.imageUrl = imageUrl;
+        image.setDiary(diary);
+
+        return image;
+    }
 
 }
