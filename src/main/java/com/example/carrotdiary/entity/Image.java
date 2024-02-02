@@ -35,7 +35,7 @@ public class Image {
     }
 
     // 생성 메서드
-    public static Image createImage(String imageUrl, Diary diary) {
+    public static Image addImage(String imageUrl, Diary diary) {
         Image image = new Image();
         image.imageUrl = imageUrl;
         image.setDiary(diary);

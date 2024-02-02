@@ -45,7 +45,7 @@ public class Diary extends BaseTimeEntity {
     }
 
     // 생성 메서드
-    public static Diary createDiary(String content, PostDiary postDiary, Image... images) {
+    public static Diary addDiary(String content, PostDiary postDiary, Image... images) {
         Diary diary = new Diary();
         diary.content = content;
         diary.setPostDiary(postDiary);

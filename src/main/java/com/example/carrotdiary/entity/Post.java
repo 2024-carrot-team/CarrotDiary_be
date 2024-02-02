@@ -50,7 +50,7 @@ public class Post extends BaseTimeEntity{
     }
 
     // 생성 메서드
-    public static Post createPost(Member member, String title, Image image) {
+    public static Post addPost(Member member, String title, Image image) {
         Post post = new Post();
         post.title = title;
         post.setMember(member);
