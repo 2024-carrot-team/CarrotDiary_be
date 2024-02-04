@@ -1,6 +1,7 @@
 package com.example.carrrotdiary.member.entity;
 
 import com.example.carrrotdiary.global.constants.Role;
+import com.example.carrrotdiary.member.dto.MemberRequestDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
+@Builder
 public class MemberEntity {
 
 
@@ -33,7 +35,7 @@ public class MemberEntity {
 
     private Role role;
 
-    @Builder
+
     public MemberEntity(long id, String email, String password, String nickname, LocalDateTime brithDayTime, Role role) {
         this.id = id;
         this.email = email;
@@ -43,5 +45,12 @@ public class MemberEntity {
         this.role = role;
     }
 
+
+    public void updateMember(MemberRequestDto.updateRequestDto updateRequestDto) {
+        this.email = updateRequestDto.getEmail();
+        this.password = updateRequestDto.getPassword();
+        this.nickname = updateRequestDto.getNickname();
+        this.brithDayTime = updateRequestDto.getBrithDayTime();
+    }
 
 }

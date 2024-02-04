@@ -3,6 +3,7 @@ package com.example.carrrotdiary.member.dto;
 import com.example.carrrotdiary.global.constants.Role;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class MemberRequestDto {
 
 
@@ -38,4 +39,13 @@ public class MemberRequestDto {
             this.password = password;
         }
     }
+
+    @Getter
+    public static class updateRequestDto {
+        private String email;
+        private String password;
+        private String nickname;
+        private LocalDateTime brithDayTime;
+    }
+
 }
