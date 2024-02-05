@@ -1,5 +1,7 @@
-package com.example.carrotdiary.entity;
+package com.example.carrotdiary.member.entity;
 
+import com.example.carrotdiary.common.BaseTimeEntity;
+import com.example.carrotdiary.post.entity.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

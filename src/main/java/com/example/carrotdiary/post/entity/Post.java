@@ -1,7 +1,11 @@
-package com.example.carrotdiary.entity;
+package com.example.carrotdiary.post.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
 
+import com.example.carrotdiary.common.BaseTimeEntity;
+import com.example.carrotdiary.image.entity.Image;
+import com.example.carrotdiary.member.entity.Member;
+import com.example.carrotdiary.postdiary.entity.PostDiary;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,14 +16,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.util.List;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Post extends BaseTimeEntity{
+public class Post extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
@@ -45,7 +48,7 @@ public class Post extends BaseTimeEntity{
         member.getPosts().add(this);
     }
 
-    public void addPostImage(Image image) {
+    public void setPostImage(Image image) {
         this.image = image;
     }
 
@@ -54,8 +57,13 @@ public class Post extends BaseTimeEntity{
         Post post = new Post();
         post.title = title;
         post.setMember(member);
-        post.addPostImage(image);
+        post.setPostImage(image);
 
         return post;
+    }
+
+    public void updatePost(String title, Image image) {
+        this.title = title;
+        this.image = image;
     }
 }
