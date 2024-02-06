@@ -1,6 +1,10 @@
-package com.example.carrotdiary.entity;
+package com.example.carrotdiary.postdiary.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
+
+import com.example.carrotdiary.diary.entity.Diary;
+import com.example.carrotdiary.common.BaseTimeEntity;
+import com.example.carrotdiary.post.entity.Post;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
