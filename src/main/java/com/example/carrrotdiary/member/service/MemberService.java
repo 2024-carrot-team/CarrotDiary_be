@@ -74,6 +74,5 @@ public class MemberService implements UserDetailsService {
         memberRepository.delete(member);
     }
 
-//test
 
 }
