@@ -1,6 +1,6 @@
 package com.example.carrotdiary.post.dto;
 
-import com.example.carrotdiary.image.dto.ImageResponseDto.ImageDto;
+import com.example.carrotdiary.image.dto.ImageResponseDto;
 import com.example.carrotdiary.post.entity.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +13,11 @@ public class PostResponseDto {
     public static class PostDto {
 
         private String title;
-        private ImageDto image;
+        private ImageResponseDto imageUrl;
 
         public PostDto(Post post) {
             title = post.getTitle();
-            image = new ImageDto(post.getImage());
+            imageUrl = new ImageResponseDto(post.getImage());
         }
     }
 

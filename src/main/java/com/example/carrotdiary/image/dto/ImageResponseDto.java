@@ -1,14 +1,16 @@
 package com.example.carrotdiary.image.dto;
 
+import com.example.carrotdiary.image.entity.Image;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class ImageResponseDto {
-    private String fileName;
+
     private String imageUrl;
 
+    public ImageResponseDto(Image image) {
+        imageUrl = image.getImageUrl();
+    }
 }
