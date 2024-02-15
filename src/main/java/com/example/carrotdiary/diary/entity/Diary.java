@@ -1,7 +1,10 @@
-package com.example.carrotdiary.entity;
+package com.example.carrotdiary.diary.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
 
+import com.example.carrotdiary.global.common.BaseTimeEntity;
+import com.example.carrotdiary.image.entity.Image;
+import com.example.carrotdiary.postdiary.entity.PostDiary;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,19 +42,19 @@ public class Diary extends BaseTimeEntity {
         postDiary.getDiaries().add(this);
     }
 
-    public void addDiaryImage(Image image) {
+    public void setDiaryImage(Image image) {
         images.add(image);
         image.setDiary(this);
     }
 
     // 생성 메서드
-    public static Diary addDiary(String content, PostDiary postDiary, Image... images) {
+    public static Diary addDiary(PostDiary postDiary, String content, Image... images) {
         Diary diary = new Diary();
-        diary.content = content;
         diary.setPostDiary(postDiary);
+        diary.content = content;
 
         for (Image image : images) {
-            diary.addDiaryImage(image);
+            diary.setDiaryImage(image);
         }
 
         return diary;

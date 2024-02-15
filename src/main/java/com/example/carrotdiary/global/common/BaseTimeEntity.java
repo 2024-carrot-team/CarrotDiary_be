@@ -1,4 +1,4 @@
-package com.example.carrotdiary.entity;
+package com.example.carrotdiary.global.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
