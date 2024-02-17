@@ -2,7 +2,7 @@ package com.example.carrotdiary.post.service;
 
 import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.image.entity.Image;
-import com.example.carrotdiary.member.entity.Member;
+import com.example.carrotdiary.member.entity.MemberEntity;
 import com.example.carrotdiary.image.repository.ImageRepository;
 import com.example.carrotdiary.member.repository.MemberRepository;
 import com.example.carrotdiary.post.dto.PostRequestDto;
@@ -29,7 +29,7 @@ public class PostService {
     @Transactional
     public Long createPost(Long memberId, PostRequestDto postRequestDto) {
 
-        Member member = memberRepository.findById(memberId)
+        MemberEntity member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new NoSuchElementException("조회된 아이디가 없습니다."));
         Image image = imageRepository.findById(postRequestDto.getImageId())
                 .orElseThrow(() -> new NoSuchElementException("조회된 아이디가 없습니다."));

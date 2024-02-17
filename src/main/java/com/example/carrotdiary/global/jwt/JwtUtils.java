@@ -1,10 +1,11 @@
-package com.example.carrrotdiary.global.jwt;
+package com.example.carrotdiary.global.jwt;
 
-import com.example.carrrotdiary.global.constants.Role;
+import com.example.carrotdiary.global.constants.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,5 +103,15 @@ public class JwtUtils {
     public String getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("sub", String.class);
     }
+
+//    public String getUserEmail(HttpServletRequest req) {
+//        String token = getTokenFromRequest(req);
+//        if (token != null && token.startsWith(BEARER_PREFIX)) {
+//            token = substringToken(token);
+//            Claims claims = getUserInfoFromToken(token);
+//            return claims.getSubject();
+//        }
+//        return null;
+//    }
 
 }

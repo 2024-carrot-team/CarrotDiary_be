@@ -1,4 +1,4 @@
-package com.example.carrrotdiary.member.entity;
+package com.example.carrotdiary.member.entity;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

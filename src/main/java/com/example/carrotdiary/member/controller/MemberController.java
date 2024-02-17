@@ -1,14 +1,12 @@
-package com.example.carrrotdiary.member.controller;
+package com.example.carrotdiary.member.controller;
 
-import com.example.carrrotdiary.member.dto.MemberRequestDto;
-import com.example.carrrotdiary.member.dto.MemberResponseDto;
-import com.example.carrrotdiary.member.service.MemberService;
+import com.example.carrotdiary.member.dto.MemberRequestDto;
+import com.example.carrotdiary.member.dto.MemberResponseDto;
+import com.example.carrotdiary.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
 @RequestMapping("/members")
