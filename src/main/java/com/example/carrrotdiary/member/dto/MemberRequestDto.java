@@ -1,51 +1,40 @@
 package com.example.carrrotdiary.member.dto;
 
 import com.example.carrrotdiary.global.constants.Role;
-import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class MemberRequestDto {
+public record MemberRequestDto(
 
+        @Email
+        String email,
+        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,16}$",
+                message = "비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
+        String password,
+        String nickname,
+        LocalDateTime birthDayTime,
+        Role role,
+        String adminToken
+) {
 
-
-    private String email;
-
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,16}$", message = "비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
-    private String password;
-
-    private String nickname;
-    private LocalDateTime brithDayTime;
-
-    private Role role;
-
-
-    @Getter
-    @NoArgsConstructor
-    public static class loginRequestDto {
-        private String email;
-
-        private String password;
-        public loginRequestDto(String email, String password) {
-            this.email = email;
-            this.password = password;
-        }
+    public boolean isAdmin() {
+        return this.role == Role.ADMIN;
     }
 
-    @Getter
-    public static class updateRequestDto {
-        private String email;
-        private String password;
-        private String nickname;
-        private LocalDateTime brithDayTime;
-    }
+    @Builder
+    public record LoginRequestDto(
+            String email,
+            String password
+    ) {}
+
+    public record updateRequestDto(
+            String email,
+            String password,
+            String nickname,
+            LocalDateTime birthDayTime
+    ) {}
 
 }

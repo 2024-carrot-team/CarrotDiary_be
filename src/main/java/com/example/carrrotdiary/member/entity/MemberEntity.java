@@ -2,10 +2,9 @@ package com.example.carrrotdiary.member.entity;
 
 import com.example.carrrotdiary.global.constants.Role;
 import com.example.carrrotdiary.member.dto.MemberRequestDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,15 +15,15 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class MemberEntity {
 
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Email
     private String email;
 
     private String password;
@@ -32,25 +31,15 @@ public class MemberEntity {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime brithDayTime;
-
+    @Enumerated(EnumType.STRING)
     private Role role;
 
 
-    public MemberEntity(long id, String email, String password, String nickname, LocalDateTime brithDayTime, Role role) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.brithDayTime = brithDayTime;
-        this.role = role;
-    }
-
-
     public void updateMember(MemberRequestDto.updateRequestDto updateRequestDto) {
-        this.email = updateRequestDto.getEmail();
-        this.password = updateRequestDto.getPassword();
-        this.nickname = updateRequestDto.getNickname();
-        this.brithDayTime = updateRequestDto.getBrithDayTime();
+        this.email = updateRequestDto.email();
+        this.password = updateRequestDto.password();
+        this.nickname = updateRequestDto.nickname();
+        this.brithDayTime = updateRequestDto.birthDayTime();
     }
 
 }

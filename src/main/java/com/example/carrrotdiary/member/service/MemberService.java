@@ -18,25 +18,23 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
 
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    private JwtUtils jwtUtil;
+    private final JwtUtils jwtUtil;
 
     //C
     public void createMember(MemberRequestDto memberRequestDto) {
         MemberEntity memberEntity = MemberEntity.builder()
-                .email(memberRequestDto.getEmail())
-                .password(memberRequestDto.getPassword())
-                .nickname(memberRequestDto.getNickname())
-                .brithDayTime(memberRequestDto.getBrithDayTime())
-                .role(memberRequestDto.getRole())
+                .email(memberRequestDto.email())
+                .password(passwordEncoder.encode(memberRequestDto.password()))
+                .nickname(memberRequestDto.nickname())
+                .brithDayTime(memberRequestDto.birthDayTime())
+                .role(memberRequestDto.role())
                 .build();
 
         memberRepository.save(memberEntity);
-        MemberResponseDto.fromEntity(memberEntity);
-
 
     }
 
