@@ -2,7 +2,7 @@ package com.example.carrotdiary.post.entity;
 
 import static jakarta.persistence.FetchType.LAZY;
 
-import com.example.carrotdiary.common.BaseTimeEntity;
+import com.example.carrotdiary.global.common.BaseTimeEntity;
 import com.example.carrotdiary.image.entity.Image;
 import com.example.carrotdiary.member.entity.Member;
 import com.example.carrotdiary.postdiary.entity.PostDiary;

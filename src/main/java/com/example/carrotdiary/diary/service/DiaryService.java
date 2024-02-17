@@ -10,7 +10,6 @@ import com.example.carrotdiary.diary.repository.DiaryRepository;
 import com.example.carrotdiary.image.entity.Image;
 import com.example.carrotdiary.postdiary.entity.PostDiary;
 import com.example.carrotdiary.postdiary.repository.PostDiaryRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -58,12 +57,12 @@ public class DiaryService {
     public Result getDiary(Long postDiaryId) {
         List<Diary> diary = diaryRepository.findByPostDiaryId(postDiaryId);
         List<DiaryDto> result = diary.stream()
-                .map(d -> new DiaryDto(d))
+                .map(DiaryDto::new)
                 .collect(Collectors.toList());
 
         return new Result(result);
     }
-    // Diary 수정
+
 
 
     // Diary 삭제
