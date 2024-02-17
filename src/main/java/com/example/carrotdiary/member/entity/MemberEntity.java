@@ -10,7 +10,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.Email;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +17,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -49,10 +46,10 @@ public class MemberEntity extends BaseTimeEntity {
 
 
     public void updateMember(updateRequestDto updateRequestDto) {
-        this.email = updateRequestDto.getEmail();
-        this.password = updateRequestDto.getPassword();
-        this.nickname = updateRequestDto.getNickname();
-        this.brithDayTime = updateRequestDto.getBrithDayTime();
+        this.email = updateRequestDto.email();
+        this.password = updateRequestDto.password();
+        this.nickname = updateRequestDto.nickname();
+        this.brithDayTime = updateRequestDto.birthDayTime();
     }
 
 
