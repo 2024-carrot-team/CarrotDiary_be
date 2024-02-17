@@ -11,6 +11,7 @@ import com.example.carrotdiary.post.repository.PostRepository;
 import com.example.carrotdiary.post.entity.Post;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,9 @@ public class PostService {
 
     // Post 등록
     @Transactional
-    public Long createPost(Long memberId, PostRequestDto postRequestDto) {
+    public Long createPost(String userEmail, PostRequestDto postRequestDto) {
 
-        MemberEntity member = memberRepository.findById(memberId)
+        MemberEntity member = memberRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new NoSuchElementException("조회된 아이디가 없습니다."));
         Image image = imageRepository.findById(postRequestDto.getImageId())
                 .orElseThrow(() -> new NoSuchElementException("조회된 아이디가 없습니다."));
@@ -42,9 +43,9 @@ public class PostService {
 
     // Post 조회
     @Transactional
-    public Result getPost(Long memberId) {
+    public Result getPosts(String userEmail) {
 
-        List<Post> posts = postRepository.findByMemberId(memberId);
+        List<Post> posts = postRepository.findByMemberEmail(userEmail);
         List<PostResponseDto> result = posts.stream()
                 .map(PostResponseDto::new)
                 .collect(Collectors.toList());
@@ -54,19 +55,19 @@ public class PostService {
 
     // Post 수정
     @Transactional
-    public Result updatePost(Long postId, PostRequestDto postRequestDto) {
+    public void updatePost(Long postId, PostRequestDto postRequestDto) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new NoSuchElementException("조회된 Post 아이디가 없습니다."));
 
+        // 이미지가 수정된 경우
         if (postRequestDto.getImageId() != null && !postRequestDto.getImageId().equals(post.getImage().getId())) {
             Image image = imageRepository.findById(postRequestDto.getImageId())
                     .orElseThrow(() -> new NoSuchElementException("조회된 Image 아이디가 없습니다."));
             post.updatePost(postRequestDto.getTitle(), image);
+            // 이미지를 수정을 안한 경우
         } else {
             post.updatePost(postRequestDto.getTitle(), post.getImage());
         }
-
-        return new Result(post);
     }
 
 
@@ -78,5 +79,10 @@ public class PostService {
                 .orElseThrow(() -> new NoSuchElementException("조회된 Post 아이디가 없습니다."));
 
         postRepository.delete(post);
+    }
+
+    public boolean checkPostOwnership(Long postId, String userEmail) {
+        Optional<Post> post = postRepository.findByIdAndMemberEmail(postId, userEmail);
+        return post.isPresent();
     }
 }

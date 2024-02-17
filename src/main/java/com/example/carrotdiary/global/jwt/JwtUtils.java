@@ -104,14 +104,14 @@ public class JwtUtils {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("sub", String.class);
     }
 
-//    public String getUserEmail(HttpServletRequest req) {
+    public String getUserEmail(HttpServletRequest req) {
 //        String token = getTokenFromRequest(req);
 //        if (token != null && token.startsWith(BEARER_PREFIX)) {
 //            token = substringToken(token);
 //            Claims claims = getUserInfoFromToken(token);
 //            return claims.getSubject();
 //        }
-//        return null;
-//    }
+        return null;
+    }
 
 }
