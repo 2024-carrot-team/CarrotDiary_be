@@ -17,10 +17,10 @@ public class PostDiaryService {
     private final PostDiaryRepository postDiaryRepository;
 
     // 등록
-    @Transactional
     public Long createPostDiary(Long postId) {
+
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new NoSuchElementException("조회된 아이디가 없습니다."));
+                .orElseThrow(() -> new NoSuchElementException("조회된 Post가 없습니다."));
 
         PostDiary postDiary = PostDiary.addPostDiary(post);
 
@@ -29,6 +29,16 @@ public class PostDiaryService {
         return postDiary.getId();
     }
 
+    // 조회
+    @Transactional
+    public Long getPostDiary(Long postDiaryId) {
+        PostDiary postDiary = postDiaryRepository.findById(postDiaryId)
+                .orElseThrow(() -> new NoSuchElementException("조회된 PostDiaryId 가 없습니다."));
+
+        return postDiary.getId();
+    }
+
+
     // 삭제
     @Transactional
     public void deletePostDiary(Long postDiaryId) {
@@ -36,9 +46,17 @@ public class PostDiaryService {
         PostDiary postDiary = postDiaryRepository.findById(postDiaryId)
                 .orElseThrow(() -> new NoSuchElementException("조회된 아이디가 없습니다."));
 
+        Post post = postDiary.getPost();
+
         postDiaryRepository.delete(postDiary);
     }
 
-
-
+//    public boolean checkPostDiaryOwnership(Long postDiaryId, String userEmail) {
+//        return postDiaryRepository.findById(postDiaryId)
+//                .map(PostDiary::getPost)
+//                .map(Post::getMember)
+//                .map(MemberEntity::getEmail)
+//                .filter(email -> email.equals(userEmail))
+//                .isPresent();
+//    }
 }

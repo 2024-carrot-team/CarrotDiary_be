@@ -38,6 +38,11 @@ public class Image extends BaseEntity {
         diary.getImages().add(this);
     }
 
+    public Image(String imageUrl, String fileName) {
+        this.imageUrl = imageUrl;
+        this.fileName = fileName;
+    }
+
     // 생성 메서드
     public static Image addDiaryImage(String imageUrl, String fileName, Diary diary) {
         Image image = new Image();

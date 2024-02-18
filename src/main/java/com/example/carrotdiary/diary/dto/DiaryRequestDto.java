@@ -8,6 +8,18 @@ import lombok.NoArgsConstructor;
 public class DiaryRequestDto {
 
     @Getter
+    public static class createDiaryDto {
+        private String content;
+        private Long postDiaryId;
+
+        public createDiaryDto(String content, Long postDiaryId) {
+            this.content = content;
+            this.postDiaryId = postDiaryId;
+        }
+
+
+    }
+    @Getter
     public static class updateDiaryDto {
 
 

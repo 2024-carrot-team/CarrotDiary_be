@@ -2,10 +2,15 @@ package com.example.carrotdiary.image.service;
 
 import com.example.carrotdiary.diary.entity.Diary;
 import com.example.carrotdiary.diary.repository.DiaryRepository;
+import com.example.carrotdiary.global.common.Result;
+import com.example.carrotdiary.image.dto.ImageResponseDto;
 import com.example.carrotdiary.image.entity.Image;
 import com.example.carrotdiary.image.repository.ImageRepository;
 import com.example.carrotdiary.post.entity.Post;
 import com.example.carrotdiary.post.repository.PostRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,27 +38,33 @@ public class ImageService {
 
     // Diary Image 등록
     @Transactional
-    public Long uploadDiaryImage(MultipartFile multipartFile, Long diaryId) throws IOException {
+    public List<Image> uploadImages(List<MultipartFile> images) throws IOException {
 
-        Diary diary = diaryRepository.findById(diaryId)
-                .orElseThrow(() -> new IllegalArgumentException("조회된 Diary 아이디가 없습니다."));
+        List<Image> uploadedImages = new ArrayList<>();
 
-        Image diaryImage = Image.addDiaryImage(uploadImageToS3(multipartFile), getS3FileName(multipartFile), diary);
-        imageRepository.save(diaryImage);
+        for (MultipartFile multipartFile : images) {
+            if (!multipartFile.isEmpty()) {
+                String imageUrl = uploadImageToS3(multipartFile); // S3에 이미지 업로드 및 URL 반환
+                String s3FileName = getS3FileName(multipartFile); // S3에 저장될 파일 이름 생성
 
-        return diaryImage.getId();
+                uploadedImages.add(new Image(imageUrl, s3FileName));
+            }
+        }
+
+        return uploadedImages;
     }
 
     // Post Image 등록
     @Transactional
-    public Long uploadPostImage(MultipartFile multipartFile, Long postId) throws IOException {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("조회된 Post 아이디가 없습니다."));
+    public String uploadPostImage(MultipartFile multipartFile) throws IOException {
 
-        Image postImage = Image.addPostImage(uploadImageToS3(multipartFile), getS3FileName(multipartFile), post);
+        String imageUrl = uploadImageToS3(multipartFile);
+        String s3FileName = getS3FileName(multipartFile);
+
+        Image postImage = new Image(imageUrl, s3FileName);
         imageRepository.save(postImage);
 
-        return postImage.getId();
+        return postImage.getImageUrl();
 
     }
 

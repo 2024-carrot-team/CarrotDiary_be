@@ -1,4 +1,4 @@
-package com.example.carrrotdiary.global.config;
+package com.example.carrotdiary.global.config;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;

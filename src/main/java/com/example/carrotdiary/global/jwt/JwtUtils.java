@@ -1,14 +1,16 @@
-package com.example.carrrotdiary.global.jwt;
+package com.example.carrotdiary.global.jwt;
 
-import com.example.carrrotdiary.global.constants.Role;
+import com.example.carrotdiary.global.constants.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.net.URLEncoder;
@@ -16,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
+@Component
 public class JwtUtils {
 
     // Header KEY 값
@@ -101,6 +104,16 @@ public class JwtUtils {
     // 토큰에서 사용자 정보 가져오기
     public String getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("sub", String.class);
+    }
+
+    public String getUserEmail(HttpServletRequest req) {
+//        String token = getTokenFromRequest(req);
+//        if (token != null && token.startsWith(BEARER_PREFIX)) {
+//            token = substringToken(token);
+//            Claims claims = getUserInfoFromToken(token);
+//            return claims.getSubject();
+//        }
+        return null;
     }
 
 }

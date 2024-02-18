@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Diary extends BaseTimeEntity {
 
     @Id
@@ -48,16 +48,23 @@ public class Diary extends BaseTimeEntity {
     }
 
     // 생성 메서드
-    public static Diary addDiary(PostDiary postDiary, String content, Image... images) {
+    public static Diary addDiary(PostDiary postDiary, String content, List<Image> images) {
         Diary diary = new Diary();
         diary.setPostDiary(postDiary);
         diary.content = content;
-
-        for (Image image : images) {
-            diary.setDiaryImage(image);
-        }
+        images.forEach(diary::setDiaryImage);
 
         return diary;
+    }
+
+    public void updateDiary(String content) {
+        this.content = content;
+    }
+
+    public void removeDiaryImage(Image image) {
+        this.images.remove(image);
+        image.setDiary(null);
+
     }
 
 }

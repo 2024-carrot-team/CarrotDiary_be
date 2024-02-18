@@ -1,9 +1,8 @@
-package com.example.carrrotdiary.member.dto;
+package com.example.carrotdiary.member.dto;
 
-import com.example.carrrotdiary.member.entity.MemberEntity;
+import com.example.carrotdiary.member.entity.MemberEntity;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
