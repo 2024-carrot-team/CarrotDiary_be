@@ -18,11 +18,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
 
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-    private PasswordEncoder passwordEncoder;
 
-    private JwtUtils jwtUtil;
+    private final PasswordEncoder passwordEncoder;
+
+    private final JwtUtils jwtUtil;
 
     //C
     public void createMember(MemberRequestDto memberRequestDto) {
