@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -72,6 +74,15 @@ public class JwtUtils {
         res.addCookie(cookie);
     }
 
+    public String getUserEmail(HttpServletRequest req) {
+        String token = getTokenFromRequest(req);
+        if (token != null && token.startsWith(BEARER_PREFIX)) {
+            token = substringToken(token);
+            Claims claims = getUserInfoFromToken(token);
+            return claims.getSubject();
+        }
+        return null;
+    }
     // 쿠키에 들어있는 정보를 Substring
     // 검증 진행 시 token 안에 들어있는 식별자를 떼내고 데이터만 검증하는 작업이 필요
     // JWT 토큰 substring
@@ -102,18 +113,23 @@ public class JwtUtils {
     }
 
     // 토큰에서 사용자 정보 가져오기
-    public String getUserInfoFromToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("sub", String.class);
+    public Claims getUserInfoFromToken(String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
-    public String getUserEmail(HttpServletRequest req) {
-//        String token = getTokenFromRequest(req);
-//        if (token != null && token.startsWith(BEARER_PREFIX)) {
-//            token = substringToken(token);
-//            Claims claims = getUserInfoFromToken(token);
-//            return claims.getSubject();
-//        }
+    public String getTokenFromRequest(HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(AUTHORIZATION_HEADER)) {
+                    try {
+                        return URLDecoder.decode(cookie.getValue(), "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        return null;
+                    }
+                }
+            }
+        }
         return null;
     }
-
 }

@@ -1,9 +1,9 @@
 package com.example.carrotdiary.member.service;
 
 import com.example.carrotdiary.global.jwt.JwtUtils;
+import com.example.carrotdiary.member.dto.MemberRequestDto;
 import com.example.carrotdiary.member.dto.MemberResponseDto;
 import com.example.carrotdiary.member.entity.MemberDetails;
-import com.example.carrotdiary.member.dto.MemberRequestDto;
 import com.example.carrotdiary.member.entity.MemberEntity;
 import com.example.carrotdiary.member.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-
 
     private final PasswordEncoder passwordEncoder;
 
@@ -72,6 +71,6 @@ public class MemberService implements UserDetailsService {
 
         memberRepository.delete(member);
     }
-
+//test
 
 }
