@@ -1,11 +1,11 @@
-package com.example.carrrotdiary.member.service;
+package com.example.carrotdiary.member.service;
 
-import com.example.carrrotdiary.global.jwt.JwtUtils;
-import com.example.carrrotdiary.member.dto.MemberRequestDto;
-import com.example.carrrotdiary.member.dto.MemberResponseDto;
-import com.example.carrrotdiary.member.entity.MemberDetails;
-import com.example.carrrotdiary.member.entity.MemberEntity;
-import com.example.carrrotdiary.member.repository.MemberRepository;
+import com.example.carrotdiary.global.jwt.JwtUtils;
+import com.example.carrotdiary.member.dto.MemberRequestDto;
+import com.example.carrotdiary.member.dto.MemberResponseDto;
+import com.example.carrotdiary.member.entity.MemberDetails;
+import com.example.carrotdiary.member.entity.MemberEntity;
+import com.example.carrotdiary.member.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

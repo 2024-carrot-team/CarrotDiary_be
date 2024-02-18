@@ -1,7 +1,7 @@
-package com.example.carrrotdiary.global.security;
+package com.example.carrotdiary.global.security;
 
-import com.example.carrrotdiary.member.entity.MemberEntity;
-import com.example.carrrotdiary.member.repository.MemberRepository;
+import com.example.carrotdiary.member.entity.MemberEntity;
+import com.example.carrotdiary.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

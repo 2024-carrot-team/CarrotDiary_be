@@ -1,10 +1,9 @@
 package com.example.carrotdiary.global.config;
 
-import com.example.carrrotdiary.global.jwt.JwtAuthenticationFilter;
-import com.example.carrrotdiary.global.jwt.JwtAuthorizationFilter;
-import com.example.carrrotdiary.global.jwt.JwtUtils;
-import com.example.carrrotdiary.global.security.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.carrotdiary.global.jwt.JwtAuthenticationFilter;
+import com.example.carrotdiary.global.jwt.JwtAuthorizationFilter;
+import com.example.carrotdiary.global.jwt.JwtUtils;
+import com.example.carrotdiary.global.security.UserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

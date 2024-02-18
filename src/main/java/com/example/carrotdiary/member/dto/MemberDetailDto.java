@@ -1,6 +1,6 @@
-package com.example.carrrotdiary.member.dto;
+package com.example.carrotdiary.member.dto;
 
-import com.example.carrrotdiary.global.constants.Role;
+import com.example.carrotdiary.global.constants.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

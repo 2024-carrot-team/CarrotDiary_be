@@ -1,8 +1,8 @@
-package com.example.carrrotdiary.global.config;
+package com.example.carrotdiary.global.config;
 
-import com.example.carrrotdiary.global.constants.Role;
-import com.example.carrrotdiary.member.dto.MemberRequestDto;
-import com.example.carrrotdiary.member.repository.MemberRepository;
+import com.example.carrotdiary.global.constants.Role;
+import com.example.carrotdiary.member.dto.MemberRequestDto;
+import com.example.carrotdiary.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

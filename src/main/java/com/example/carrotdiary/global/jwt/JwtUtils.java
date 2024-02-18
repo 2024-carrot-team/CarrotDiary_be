@@ -1,6 +1,6 @@
-package com.example.carrrotdiary.global.jwt;
+package com.example.carrotdiary.global.jwt;
 
-import com.example.carrrotdiary.global.constants.Role;
+import com.example.carrotdiary.global.constants.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;

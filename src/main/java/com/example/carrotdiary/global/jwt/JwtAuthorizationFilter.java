@@ -1,6 +1,6 @@
-package com.example.carrrotdiary.global.jwt;
+package com.example.carrotdiary.global.jwt;
 
-import com.example.carrrotdiary.global.security.UserDetailsServiceImpl;
+import com.example.carrotdiary.global.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,9 +1,9 @@
-package com.example.carrrotdiary.global.jwt;
+package com.example.carrotdiary.global.jwt;
 
-import com.example.carrrotdiary.global.constants.Role;
-import com.example.carrrotdiary.global.security.UserDetailsImpl;
-import com.example.carrrotdiary.member.dto.MemberDetailDto;
-import com.example.carrrotdiary.member.dto.MemberRequestDto;
+import com.example.carrotdiary.global.constants.Role;
+import com.example.carrotdiary.global.security.UserDetailsImpl;
+import com.example.carrotdiary.member.dto.MemberDetailDto;
+import com.example.carrotdiary.member.dto.MemberRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
