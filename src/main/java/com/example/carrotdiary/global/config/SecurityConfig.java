@@ -1,4 +1,4 @@
-package com.example.carrrotdiary.global.config;
+package com.example.carrotdiary.global.config;
 
 import com.example.carrrotdiary.global.jwt.JwtAuthenticationFilter;
 import com.example.carrrotdiary.global.jwt.JwtAuthorizationFilter;

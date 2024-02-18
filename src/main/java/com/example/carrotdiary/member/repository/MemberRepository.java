@@ -1,6 +1,6 @@
-package com.example.carrrotdiary.member.repository;
+package com.example.carrotdiary.member.repository;
 
-import com.example.carrrotdiary.member.entity.MemberEntity;
+import com.example.carrotdiary.member.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
