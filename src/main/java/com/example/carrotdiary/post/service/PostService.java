@@ -11,8 +11,6 @@ import com.example.carrotdiary.post.repository.PostRepository;
 import com.example.carrotdiary.post.entity.Post;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,7 +44,7 @@ public class PostService {
     @Transactional
     public Result getPosts(String userEmail) {
 
-        List<Post> posts = postRepository.findByMemberEmail(userEmail);
+        List<Post> posts = postRepository.findWithImagesByMemberEmail(userEmail);
         List<PostResponseDto> result = posts.stream()
                 .map(PostResponseDto::new)
                 .collect(Collectors.toList());

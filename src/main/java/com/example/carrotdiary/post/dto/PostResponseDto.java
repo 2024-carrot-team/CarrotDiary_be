@@ -10,11 +10,11 @@ public class PostResponseDto {
 
     private Long id;
     private String title;
-    private ImageResponseDto imageUrl;
+    private String imageUrl;
 
     public PostResponseDto(Post post) {
         id = post.getId();
         title = post.getTitle();
-        imageUrl = new ImageResponseDto(post.getImage());
+        imageUrl = post.getImage().getImageUrl();
     }
 }
