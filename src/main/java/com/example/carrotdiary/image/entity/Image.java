@@ -39,9 +39,9 @@ public class Image extends BaseEntity {
         diary.getImages().add(this);
     }
 
-    public Image(String imageUrl, String fileName) {
-        this.imageUrl = imageUrl;
+    public Image(String fileName, String imageUrl) {
         this.fileName = fileName;
+        this.imageUrl = imageUrl;
     }
 
     // 생성 메서드
@@ -63,9 +63,9 @@ public class Image extends BaseEntity {
         return image;
     }
 
-    public void updateImage(String imageUrl, String fileName) {
-        this.imageUrl = imageUrl;
+    public void updateImage(String fileName, String imageUrl) {
         this.fileName = fileName;
+        this.imageUrl = imageUrl;
     }
 
 

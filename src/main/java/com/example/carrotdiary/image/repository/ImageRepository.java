@@ -14,4 +14,5 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     @Query("select i.id from Image i where i.diary.id = :diaryId")
     List<Long> findImageIdsByDiaryId(@Param("diaryId") Long diaryId);
 
+
 }
