@@ -19,4 +19,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findWithImagesByMemberEmail(@Param("userEmail") String userEmail);
 
     Optional<Post> findByIdAndMemberEmail(Long id, String userEmail);
+
 }
