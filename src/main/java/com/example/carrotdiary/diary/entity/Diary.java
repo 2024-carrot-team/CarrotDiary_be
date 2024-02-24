@@ -5,6 +5,7 @@ import static jakarta.persistence.FetchType.LAZY;
 import com.example.carrotdiary.global.common.BaseTimeEntity;
 import com.example.carrotdiary.image.entity.Image;
 import com.example.carrotdiary.postdiary.entity.PostDiary;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class Diary extends BaseTimeEntity {
     @JoinColumn(name = "post_diary_id")
     private PostDiary postDiary;
 
-    @OneToMany(mappedBy = "diary")
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
     private List<Image> images = new ArrayList<>();
 
     // 연관관계 편의 메서드
@@ -57,14 +58,13 @@ public class Diary extends BaseTimeEntity {
         return diary;
     }
 
-    public void updateDiary(String content) {
+    public void updateDiaryContent(String content) {
         this.content = content;
     }
 
-    public void removeDiaryImage(Image image) {
-        this.images.remove(image);
-        image.setDiary(null);
-
+    public void updateDiaryImage(List<Image> images) {
+        this.images = images;
     }
+
 
 }
