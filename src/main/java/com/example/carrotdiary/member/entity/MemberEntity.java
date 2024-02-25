@@ -4,12 +4,8 @@ import com.example.carrotdiary.global.common.BaseTimeEntity;
 import com.example.carrotdiary.global.constants.Role;
 import com.example.carrotdiary.member.dto.MemberRequestDto.updateRequestDto;
 import com.example.carrotdiary.post.entity.Post;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class MemberEntity extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String email;
 
