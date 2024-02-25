@@ -1,5 +1,6 @@
 package com.example.carrotdiary.diary.dto;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,11 +11,9 @@ public class DiaryRequestDto {
     @Getter
     public static class createDiaryDto {
         private String content;
-        private Long postDiaryId;
 
-        public createDiaryDto(String content, Long postDiaryId) {
+        public createDiaryDto(String content) {
             this.content = content;
-            this.postDiaryId = postDiaryId;
         }
 
 
@@ -24,13 +23,15 @@ public class DiaryRequestDto {
 
 
         private String content;
-        private Long imageId;
+        private List<Long> deleteImageIds;
 
-        public updateDiaryDto(String content, Long imageId) {
+
+        public updateDiaryDto(String content, List<Long> deleteImageIds) {
             this.content = content;
-            this.imageId = imageId;
+            this.deleteImageIds = deleteImageIds;
         }
     }
+
 
 
 }

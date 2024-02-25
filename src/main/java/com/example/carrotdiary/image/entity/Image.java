@@ -8,6 +8,7 @@ import com.example.carrotdiary.post.entity.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class Image extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
     private Long id;
 
@@ -38,9 +39,9 @@ public class Image extends BaseEntity {
         diary.getImages().add(this);
     }
 
-    public Image(String imageUrl, String fileName) {
-        this.imageUrl = imageUrl;
+    public Image(String fileName, String imageUrl) {
         this.fileName = fileName;
+        this.imageUrl = imageUrl;
     }
 
     // 생성 메서드
@@ -62,9 +63,9 @@ public class Image extends BaseEntity {
         return image;
     }
 
-    public void updateImage(String imageUrl, String fileName) {
-        this.imageUrl = imageUrl;
+    public void updateImage(String fileName, String imageUrl) {
         this.fileName = fileName;
+        this.imageUrl = imageUrl;
     }
 
 

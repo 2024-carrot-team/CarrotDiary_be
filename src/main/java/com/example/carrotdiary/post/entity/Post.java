@@ -6,9 +6,11 @@ import com.example.carrotdiary.global.common.BaseTimeEntity;
 import com.example.carrotdiary.image.entity.Image;
 import com.example.carrotdiary.member.entity.MemberEntity;
 import com.example.carrotdiary.postdiary.entity.PostDiary;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -25,7 +27,7 @@ import lombok.NoArgsConstructor;
 public class Post extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     private Long id;
 
@@ -35,10 +37,10 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity member;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<PostDiary> postDiary;
 
-    @OneToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id")
     private Image image;
 
@@ -62,8 +64,11 @@ public class Post extends BaseTimeEntity {
         return post;
     }
 
-    public void updatePost(String title, Image image) {
+    public void updatePostTitle(String title) {
         this.title = title;
+    }
+
+    public void updatePostImage(Image image) {
         this.image = image;
     }
 }

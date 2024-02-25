@@ -1,16 +1,12 @@
 package com.example.carrotdiary.image.service;
 
-import com.example.carrotdiary.diary.entity.Diary;
 import com.example.carrotdiary.diary.repository.DiaryRepository;
-import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.image.dto.ImageResponseDto;
 import com.example.carrotdiary.image.entity.Image;
 import com.example.carrotdiary.image.repository.ImageRepository;
-import com.example.carrotdiary.post.entity.Post;
 import com.example.carrotdiary.post.repository.PostRepository;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,13 +26,11 @@ public class ImageService {
 
     private final S3Client s3Client;
     private final ImageRepository imageRepository;
-    private final PostRepository postRepository;
-    private final DiaryRepository diaryRepository;
 
     @Value("${spring.cloud.aws.s3.bucket}")
     private String bucketName;
 
-    // Diary Image 등록
+    // 여러 Image 등록
     @Transactional
     public List<Image> uploadImages(List<MultipartFile> images) throws IOException {
 
@@ -44,27 +38,27 @@ public class ImageService {
 
         for (MultipartFile multipartFile : images) {
             if (!multipartFile.isEmpty()) {
-                String imageUrl = uploadImageToS3(multipartFile); // S3에 이미지 업로드 및 URL 반환
-                String s3FileName = getS3FileName(multipartFile); // S3에 저장될 파일 이름 생성
+                ImageResponseDto imageResponseDto = uploadImageToS3(multipartFile); // S3에 저장될 파일 이름 생성
 
-                uploadedImages.add(new Image(imageUrl, s3FileName));
+                uploadedImages.add(new Image(imageResponseDto.getFileName(), imageResponseDto.getImageUrl()));
             }
         }
 
         return uploadedImages;
     }
 
-    // Post Image 등록
+    // 단일 Image 등록
     @Transactional
-    public String uploadPostImage(MultipartFile multipartFile) throws IOException {
+    public Image uploadPostImage(MultipartFile multipartFile) throws IOException {
 
-        String imageUrl = uploadImageToS3(multipartFile);
-        String s3FileName = getS3FileName(multipartFile);
+        ImageResponseDto imageResponseDto = uploadImageToS3(multipartFile);
 
-        Image postImage = new Image(imageUrl, s3FileName);
+        Image postImage = new Image(imageResponseDto.getFileName(), imageResponseDto.getImageUrl());
+
         imageRepository.save(postImage);
 
-        return postImage.getImageUrl();
+        return postImage;
+
 
     }
 
@@ -78,29 +72,42 @@ public class ImageService {
             deleteImageFromS3(image.getFileName());
         }
 
-        image.updateImage(uploadImageToS3(multipartFile), getS3FileName(multipartFile));
+        ImageResponseDto imageResponseDto = uploadImageToS3(multipartFile);
+        image.updateImage(imageResponseDto.getFileName(), imageResponseDto.getImageUrl());
 
         imageRepository.save(image);
     }
 
     // Image 삭제
     @Transactional
-    public void deleteImage(Long imageId) {
+    public void deleteImages(List<Long> imageIds) {
 
+        for (Long imageId : imageIds) {
+            Image image = imageRepository.findById(imageId)
+                    .orElseThrow(() -> new IllegalArgumentException("조회된 Image 아이디가 없습니다."));
+
+            String s3FileName = image.getFileName();
+            imageRepository.delete(image);
+            deleteImageFromS3(s3FileName);
+        }
+    }
+
+    @Transactional
+    public void deleteImage(Long imageId) {
         Image image = imageRepository.findById(imageId)
                 .orElseThrow(() -> new IllegalArgumentException("조회된 Image 아이디가 없습니다."));
 
         String s3FileName = image.getFileName();
+        imageRepository.delete(image);
         deleteImageFromS3(s3FileName);
 
-        imageRepository.delete(image);
     }
 
     private void deleteImageFromS3(String fileName) {
         s3Client.deleteObject(builder -> builder.bucket(bucketName).key(fileName));
     }
 
-    private String uploadImageToS3(MultipartFile multipartFile) throws IOException {
+    private ImageResponseDto uploadImageToS3(MultipartFile multipartFile) throws IOException {
         String s3FileName = getS3FileName(multipartFile);
 
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
@@ -113,12 +120,12 @@ public class ImageService {
         RequestBody requestBody = RequestBody.fromBytes(multipartFile.getBytes());
         s3Client.putObject(putObjectRequest, requestBody);
 
-        GetUrlRequest getUrlRequest = GetUrlRequest.builder()
+        String imageUrl = s3Client.utilities().getUrl(GetUrlRequest.builder()
                 .bucket(bucketName)
                 .key(s3FileName)
-                .build();
+                .build()).toString();
 
-        return s3Client.utilities().getUrl(getUrlRequest).toString();
+        return new ImageResponseDto(s3FileName, imageUrl);
     }
 
     private static String getS3FileName(MultipartFile multipartFile) {
