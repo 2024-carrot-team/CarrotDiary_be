@@ -1,7 +1,7 @@
 package com.example.carrotdiary.diary.dto;
 
 import com.example.carrotdiary.diary.entity.Diary;
-import com.example.carrotdiary.image.entity.Image;
+import com.example.carrotdiary.image.dto.ImageInfo;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,21 +25,16 @@ public class DiaryResponseDto {
 
     @Getter
     public static class DiaryDto {
-        private Long id;
+        private Long diaryId;
         private String content;
-        private List<Long> imageId;
-        private List<String> imageUrls;
+        private List<ImageInfo> imageInfo;
 
         public DiaryDto(Diary diary) {
-            id = diary.getId();
+            diaryId = diary.getId();
             content = diary.getContent();
-            imageId = diary.getImages().stream()
-                    .map(Image::getId)
+            imageInfo = diary.getImages().stream()
+                    .map(image -> new ImageInfo(image.getId(), image.getImageUrl()))
                     .collect(Collectors.toList());
-            imageUrls = diary.getImages().stream()
-                    .map(Image::getImageUrl)
-                    .collect(Collectors.toList());
-
         }
 
     }

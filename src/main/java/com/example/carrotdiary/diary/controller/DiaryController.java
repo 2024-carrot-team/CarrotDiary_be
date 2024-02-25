@@ -12,11 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,8 +29,8 @@ public class DiaryController {
 
     @PostMapping("/diary/{postDiaryId}")
     public ResponseEntity<Long> createDiary(HttpServletRequest req, @PathVariable Long postDiaryId,
-                                            @RequestBody DiaryRequestDto.createDiaryDto diaryDto,
-                                            @RequestPart List<MultipartFile> images) throws IOException {
+                                            @ModelAttribute DiaryRequestDto.createDiaryDto diaryDto,
+                                            @RequestParam List<MultipartFile> images) throws IOException {
 
         String userEmail = jwtUtils.getUserEmail(req);
         if (userEmail == null) {
@@ -72,8 +72,8 @@ public class DiaryController {
 
     @PatchMapping("/diary/{diaryId}")
     public ResponseEntity<Result> updateDiary(HttpServletRequest req, @PathVariable("diaryId") Long diaryId,
-                                              @RequestBody DiaryRequestDto.updateDiaryDto updateDiaryDto,
-                                              @RequestPart(required = false) List<MultipartFile> images) throws IOException {
+                                              @ModelAttribute DiaryRequestDto.updateDiaryDto updateDiaryDto,
+                                              @RequestParam(required = false) List<MultipartFile> images) throws IOException {
         String userEmail = jwtUtils.getUserEmail(req);
         if (userEmail == null) {
             throw new IllegalArgumentException("need login");

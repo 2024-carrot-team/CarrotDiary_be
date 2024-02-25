@@ -6,12 +6,12 @@ import lombok.Getter;
 @Getter
 public class PostResponseDto {
 
-    private Long id;
+    private Long postId;
     private String title;
     private String imageUrl;
 
     public PostResponseDto(Post post) {
-        id = post.getId();
+        postId = post.getId();
         title = post.getTitle();
         imageUrl = post.getImage().getImageUrl();
     }
