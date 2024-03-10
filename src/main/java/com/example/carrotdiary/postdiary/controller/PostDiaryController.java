@@ -1,6 +1,7 @@
 package com.example.carrotdiary.postdiary.controller;
 
 import com.example.carrotdiary.global.jwt.JwtUtils;
+import com.example.carrotdiary.postdiary.dto.PostDiaryResponseDto.PostDiaryIdDto;
 import com.example.carrotdiary.postdiary.service.PostDiaryService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +19,13 @@ public class PostDiaryController {
     private final JwtUtils jwtUtils;
 
     @PostMapping("/postDiary/{postId}")
-    public ResponseEntity<Long> createPostDiary(HttpServletRequest req, @PathVariable("postId") Long postId) {
+    public ResponseEntity<PostDiaryIdDto> createPostDiary(HttpServletRequest req, @PathVariable("postId") Long postId) {
 
         String userEmail = jwtUtils.getUserEmail(req);
         if (userEmail == null) {
             throw new IllegalArgumentException("need login");
         }
-        Long postDiaryId = postDiaryService.createPostDiary(postId);
+        PostDiaryIdDto postDiaryId = postDiaryService.createPostDiary(postId);
 
         return ResponseEntity.ok(postDiaryId);
 

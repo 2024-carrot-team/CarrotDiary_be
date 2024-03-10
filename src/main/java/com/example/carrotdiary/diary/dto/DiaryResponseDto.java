@@ -38,4 +38,13 @@ public class DiaryResponseDto {
         }
 
     }
+
+    @Getter
+    public static class DiaryIdDto {
+        private Long diaryId;
+
+        public DiaryIdDto(Long diaryId) {
+            this.diaryId = diaryId;
+        }
+    }
 }

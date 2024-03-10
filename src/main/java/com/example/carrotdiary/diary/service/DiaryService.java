@@ -3,6 +3,7 @@ package com.example.carrotdiary.diary.service;
 
 
 import com.example.carrotdiary.diary.dto.DiaryRequestDto;
+import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryIdDto;
 import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryContentDto;
 import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryDto;
@@ -37,7 +38,7 @@ public class DiaryService {
 
     // Diary 등록
     @Transactional
-    public Long createDiary(Long postDiaryId, String content, List<MultipartFile> images) throws IOException {
+    public DiaryIdDto createDiary(Long postDiaryId, String content, List<MultipartFile> images) throws IOException {
         PostDiary postDiary = postDiaryRepository.findById(postDiaryId)
                 .orElseThrow(() -> new NoSuchElementException("조회된 PostDiary 아이디가 없습니다"));
 
@@ -48,7 +49,7 @@ public class DiaryService {
         diaryRepository.save(diary);
         imageRepository.saveAll(uploadImages);
 
-        return diary.getId();
+        return new DiaryIdDto(diary.getId());
     }
 
     // Diary 조회

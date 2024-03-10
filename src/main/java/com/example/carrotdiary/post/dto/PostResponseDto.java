@@ -15,4 +15,14 @@ public class PostResponseDto {
         title = post.getTitle();
         imageUrl = post.getImage().getImageUrl();
     }
+
+    @Getter
+    public static class PostIdDto {
+        private Long postId;
+
+        public PostIdDto(Long postId) {
+            this.postId = postId;
+        }
+    }
+
 }

@@ -4,10 +4,10 @@ import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.image.entity.Image;
 import com.example.carrotdiary.image.service.ImageService;
 import com.example.carrotdiary.member.entity.MemberEntity;
-import com.example.carrotdiary.image.repository.ImageRepository;
 import com.example.carrotdiary.member.repository.MemberRepository;
 import com.example.carrotdiary.post.dto.PostRequestDto;
 import com.example.carrotdiary.post.dto.PostResponseDto;
+import com.example.carrotdiary.post.dto.PostResponseDto.PostIdDto;
 import com.example.carrotdiary.post.repository.PostRepository;
 import com.example.carrotdiary.post.entity.Post;
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class PostService {
 
     // Post 등록
     @Transactional
-    public Long createPost(String userEmail, PostRequestDto postRequestDto, MultipartFile file) throws IOException {
+    public PostIdDto createPost(String userEmail, PostRequestDto postRequestDto, MultipartFile file) throws IOException {
 
         MemberEntity member = memberRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new NoSuchElementException("조회된 아이디가 없습니다."));
@@ -42,7 +42,7 @@ public class PostService {
 
         postRepository.save(post);
 
-        return post.getId();
+        return new PostIdDto(post.getId());
     }
 
     // Post 조회
