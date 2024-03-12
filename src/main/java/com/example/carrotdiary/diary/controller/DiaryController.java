@@ -44,6 +44,18 @@ public class DiaryController {
 
     }
 
+    @GetMapping("/main")
+    public ResponseEntity<Result> getMainDiary(HttpServletRequest req) {
+        String userEmail = jwtUtils.getUserEmail(req);
+        if (userEmail == null) {
+            throw new IllegalArgumentException("need login");
+        }
+
+        Result mainDiary = diaryService.getMainDiary();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(mainDiary);
+    }
+
     @GetMapping("/diary/all/{postDiaryId}")
     public ResponseEntity<Result> getAllDiary(HttpServletRequest req, @PathVariable("postDiaryId") Long postDiaryId) {
 
