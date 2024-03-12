@@ -42,7 +42,7 @@ public class PostService {
 
         postRepository.save(post);
 
-        return new PostIdDto(post.getId());
+        return new PostIdDto(post);
     }
 
     // Post 조회

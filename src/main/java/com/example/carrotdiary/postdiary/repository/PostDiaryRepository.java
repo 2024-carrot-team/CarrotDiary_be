@@ -13,4 +13,6 @@ public interface PostDiaryRepository extends JpaRepository<PostDiary, Long> {
     @Query("select pd from PostDiary pd order by pd.id desc")
     List<PostDiary> findAllPostDiaries();
 
+    @Query("select p.member.id from PostDiary pd join pd.post p where pd.id = :postDiaryId")
+    Long findMemberIdByPostDiaryId(Long postDiaryId);
 }

@@ -6,11 +6,13 @@ import lombok.Getter;
 @Getter
 public class PostResponseDto {
 
+    private Long memberId;
     private Long postId;
     private String title;
     private String imageUrl;
 
     public PostResponseDto(Post post) {
+        memberId = post.getMember().getId();
         postId = post.getId();
         title = post.getTitle();
         imageUrl = post.getImage().getImageUrl();
@@ -19,9 +21,8 @@ public class PostResponseDto {
     @Getter
     public static class PostIdDto {
         private Long postId;
-
-        public PostIdDto(Long postId) {
-            this.postId = postId;
+        public PostIdDto(Post post) {
+            this.postId = post.getId();
         }
     }
 

@@ -27,7 +27,7 @@ public class PostDiaryService {
 
         postDiaryRepository.save(postDiary);
 
-        return new PostDiaryIdDto(postDiary.getId());
+        return new PostDiaryIdDto(postDiary);
     }
 
     // 조회

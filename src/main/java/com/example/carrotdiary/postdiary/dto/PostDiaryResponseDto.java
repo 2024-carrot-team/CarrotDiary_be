@@ -1,6 +1,6 @@
 package com.example.carrotdiary.postdiary.dto;
 
-import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryDto;
+import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryMainDto;
 import com.example.carrotdiary.postdiary.entity.PostDiary;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,23 +11,27 @@ public class PostDiaryResponseDto {
 
     @Getter
     public static class PostDiaryIdDto {
+        private Long memberId;
         private Long postDiaryId;
 
-        public PostDiaryIdDto(Long postDiaryId) {
-            this.postDiaryId = postDiaryId;
+        public PostDiaryIdDto(PostDiary postDiary) {
+            this.memberId = postDiary.getPost().getMember().getId();
+            this.postDiaryId = postDiary.getId();
         }
 
     }
 
     @Getter
     public static class PostDiaryDto {
+        private Long memberId;
         private Long postDiaryId;
-        private List<DiaryDto> diaries;
+        private List<DiaryMainDto> diaries;
 
         public PostDiaryDto(PostDiary postDiary) {
+            memberId = postDiary.getPost().getMember().getId();
             postDiaryId = postDiary.getId();
             diaries = postDiary.getDiaries().stream()
-                    .map(DiaryDto::new)
+                    .map(DiaryMainDto::new)
                     .collect(Collectors.toList());
 
         }
