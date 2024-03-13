@@ -1,7 +1,7 @@
 package com.example.carrotdiary.global.security;
 
 import com.example.carrotdiary.member.dto.MemberDetailDto;
-import com.example.carrotdiary.member.entity.MemberEntity;
+import com.example.carrotdiary.member.entity.Member;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
@@ -15,13 +15,13 @@ import java.util.Collections;
 @Getter
 public class UserDetailsImpl implements UserDetails {
 
-    private final MemberEntity member;
+    private final Member member;
 
-    public UserDetailsImpl(MemberEntity member) {
+    public UserDetailsImpl(Member member) {
         this.member = member;
     }
 
-    public static UserDetailsImpl createCustomUserDetails(MemberEntity user) {
+    public static UserDetailsImpl createCustomUserDetails(Member user) {
         return new UserDetailsImpl(user);
     }
 
