@@ -4,6 +4,7 @@ import com.example.carrotdiary.diary.service.DiaryService;
 import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.global.jwt.JwtUtils;
 import com.example.carrotdiary.post.dto.PostRequestDto;
+import com.example.carrotdiary.post.dto.PostResponseDto.PostIdDto;
 import com.example.carrotdiary.post.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +30,7 @@ public class PostController {
     private final JwtUtils jwtUtils;
 
     @PostMapping("/post")
-    public ResponseEntity<Long> createPost(HttpServletRequest req,
+    public ResponseEntity<PostIdDto> createPost(HttpServletRequest req,
                                            @ModelAttribute PostRequestDto postRequestDto,
                                            @RequestParam MultipartFile image) throws IOException {
 
@@ -39,7 +39,7 @@ public class PostController {
             throw new IllegalArgumentException("need login");
         }
 
-        Long postId = postService.createPost(userEmail, postRequestDto, image);
+        PostIdDto postId = postService.createPost(userEmail, postRequestDto, image);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(postId);
     }
@@ -74,7 +74,7 @@ public class PostController {
     @PatchMapping("/post/{postId}")
     public ResponseEntity<Result> updatePost(HttpServletRequest req,
                                              @PathVariable("postId") Long postId,
-                                             @RequestBody PostRequestDto postRequestDto,
+                                             @ModelAttribute PostRequestDto postRequestDto,
                                              @RequestParam(required = false) MultipartFile image) throws IOException {
         String userEmail = jwtUtils.getUserEmail(req);
         if (userEmail == null) {
