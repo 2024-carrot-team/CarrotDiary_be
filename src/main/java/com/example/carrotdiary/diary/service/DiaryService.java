@@ -3,6 +3,7 @@ package com.example.carrotdiary.diary.service;
 
 
 import com.example.carrotdiary.diary.dto.DiaryRequestDto;
+import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryIdDto;
 import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryContentDto;
 import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryDto;
@@ -11,6 +12,7 @@ import com.example.carrotdiary.diary.repository.DiaryRepository;
 import com.example.carrotdiary.image.entity.Image;
 import com.example.carrotdiary.image.repository.ImageRepository;
 import com.example.carrotdiary.image.service.ImageService;
+import com.example.carrotdiary.postdiary.dto.PostDiaryResponseDto.PostDiaryDto;
 import com.example.carrotdiary.postdiary.entity.PostDiary;
 import com.example.carrotdiary.postdiary.repository.PostDiaryRepository;
 import java.io.IOException;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +41,7 @@ public class DiaryService {
 
     // Diary 등록
     @Transactional
-    public Long createDiary(Long postDiaryId, String content, List<MultipartFile> images) throws IOException {
+    public DiaryIdDto createDiary(Long postDiaryId, String content, List<MultipartFile> images) throws IOException {
         PostDiary postDiary = postDiaryRepository.findById(postDiaryId)
                 .orElseThrow(() -> new NoSuchElementException("조회된 PostDiary 아이디가 없습니다"));
 
@@ -48,7 +52,23 @@ public class DiaryService {
         diaryRepository.save(diary);
         imageRepository.saveAll(uploadImages);
 
-        return diary.getId();
+        return new DiaryIdDto(diary.getId());
+    }
+
+    // 메인화면 Diary 조회
+    @Transactional
+    public Result getMainDiary() {
+
+        List<PostDiary> allPostDiaries = postDiaryRepository.findAllPostDiaries();
+
+        List<PostDiaryDto> result = new ArrayList<>();
+        for (PostDiary postDiary : allPostDiaries) {
+            PostDiaryDto postDiaryDto = new PostDiaryDto(postDiary);
+
+            result.add(postDiaryDto);
+        }
+        return new Result(result);
+
     }
 
     // Diary 조회
@@ -74,6 +94,8 @@ public class DiaryService {
 
         return new Result(result);
     }
+
+
 
     @Transactional
     public Result getDiary(Long diaryId) {

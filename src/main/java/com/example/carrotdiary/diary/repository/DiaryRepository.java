@@ -13,6 +13,4 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     Page<Diary> findAscByPostDiaryId(Long postDiaryId, Pageable pageable);
     List<Diary> findByPostDiaryId(Long postDiaryId);
 
-
-
 }

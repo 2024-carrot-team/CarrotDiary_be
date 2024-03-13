@@ -1,6 +1,7 @@
 package com.example.carrotdiary.diary.controller;
 
 import com.example.carrotdiary.diary.dto.DiaryRequestDto;
+import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryIdDto;
 import com.example.carrotdiary.diary.service.DiaryService;
 import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.global.jwt.JwtUtils;
@@ -28,7 +29,7 @@ public class DiaryController {
     private final JwtUtils jwtUtils;
 
     @PostMapping("/diary/{postDiaryId}")
-    public ResponseEntity<Long> createDiary(HttpServletRequest req, @PathVariable Long postDiaryId,
+    public ResponseEntity<DiaryIdDto> createDiary(HttpServletRequest req, @PathVariable Long postDiaryId,
                                             @ModelAttribute DiaryRequestDto.createDiaryDto diaryDto,
                                             @RequestParam List<MultipartFile> images) throws IOException {
 
@@ -37,10 +38,22 @@ public class DiaryController {
             throw new IllegalArgumentException("need login");
         }
 
-        Long diaryId = diaryService.createDiary(postDiaryId, diaryDto.getContent(), images);
+        DiaryIdDto diaryId = diaryService.createDiary(postDiaryId, diaryDto.getContent(), images);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(diaryId);
 
+    }
+
+    @GetMapping("/main")
+    public ResponseEntity<Result> getMainDiary(HttpServletRequest req) {
+        String userEmail = jwtUtils.getUserEmail(req);
+        if (userEmail == null) {
+            throw new IllegalArgumentException("need login");
+        }
+
+        Result mainDiary = diaryService.getMainDiary();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(mainDiary);
     }
 
     @GetMapping("/diary/all/{postDiaryId}")
