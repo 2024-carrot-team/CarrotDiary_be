@@ -4,7 +4,7 @@ import com.example.carrotdiary.global.jwt.JwtUtils;
 import com.example.carrotdiary.member.dto.MemberRequestDto;
 import com.example.carrotdiary.member.dto.MemberResponseDto;
 import com.example.carrotdiary.member.entity.MemberDetails;
-import com.example.carrotdiary.member.entity.MemberEntity;
+import com.example.carrotdiary.member.entity.Member;
 import com.example.carrotdiary.member.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class MemberService implements UserDetailsService {
 
     //C
     public void createMember(MemberRequestDto memberRequestDto) {
-        MemberEntity memberEntity = MemberEntity.builder()
+        Member member = Member.builder()
                 .email(memberRequestDto.email())
                 .password(passwordEncoder.encode(memberRequestDto.password()))
                 .nickname(memberRequestDto.nickname())
@@ -34,21 +34,21 @@ public class MemberService implements UserDetailsService {
                 .role(memberRequestDto.role())
                 .build();
 
-        memberRepository.save(memberEntity);
+        memberRepository.save(member);
 
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        MemberEntity member = memberRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Member cannot be found"));
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Member cannot be found"));
 
         return new MemberDetails(member);
     }
 
     //R 단건조회
     public MemberResponseDto checkMemberDetails(String email) throws UsernameNotFoundException{
-        MemberEntity member = memberRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Member cannot be found"));
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Member cannot be found"));
 
         return MemberResponseDto.fromEntity(member);
     }
@@ -56,7 +56,7 @@ public class MemberService implements UserDetailsService {
 
     //U 수정
     public void updateMember(String email, MemberRequestDto.updateRequestDto updateRequestDto) {
-        MemberEntity member = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("can not find member"));
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("can not find member"));
 
         member.updateMember(updateRequestDto);
 
@@ -67,7 +67,7 @@ public class MemberService implements UserDetailsService {
 
     public void deleteMember(String email) {
 
-        MemberEntity member = memberRepository.findByEmail(email).orElseThrow(() ->new EntityNotFoundException("entity not found"));
+        Member member = memberRepository.findByEmail(email).orElseThrow(() ->new EntityNotFoundException("entity not found"));
 
         memberRepository.delete(member);
     }

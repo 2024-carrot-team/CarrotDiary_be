@@ -2,7 +2,7 @@ package com.example.carrotdiary.post.service;
 
 import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.image.entity.Image;
-import com.example.carrotdiary.member.entity.MemberEntity;
+import com.example.carrotdiary.member.entity.Member;
 import com.example.carrotdiary.image.repository.ImageRepository;
 import com.example.carrotdiary.member.repository.MemberRepository;
 import com.example.carrotdiary.post.dto.PostRequestDto;
@@ -11,8 +11,6 @@ import com.example.carrotdiary.post.repository.PostRepository;
 import com.example.carrotdiary.post.entity.Post;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +29,7 @@ public class PostService {
     @Transactional
     public Long createPost(String userEmail, PostRequestDto postRequestDto) {
 
-        MemberEntity member = memberRepository.findByEmail(userEmail)
+        Member member = memberRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new NoSuchElementException("조회된 아이디가 없습니다."));
         Image image = imageRepository.findByImageUrl(postRequestDto.getImageUrl())
                 .orElseThrow(() -> new NoSuchElementException("조회된 이미지가 없습니다."));

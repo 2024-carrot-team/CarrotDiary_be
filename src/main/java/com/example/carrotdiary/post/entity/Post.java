@@ -4,7 +4,7 @@ import static jakarta.persistence.FetchType.LAZY;
 
 import com.example.carrotdiary.global.common.BaseTimeEntity;
 import com.example.carrotdiary.image.entity.Image;
-import com.example.carrotdiary.member.entity.MemberEntity;
+import com.example.carrotdiary.member.entity.Member;
 import com.example.carrotdiary.postdiary.entity.PostDiary;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,7 +33,7 @@ public class Post extends BaseTimeEntity {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
-    private MemberEntity member;
+    private Member member;
 
     @OneToMany(mappedBy = "post")
     private List<PostDiary> postDiary;
@@ -43,7 +43,7 @@ public class Post extends BaseTimeEntity {
     private Image image;
 
     // 연관관계 편의 메서드
-    public void setMember(MemberEntity member) {
+    public void setMember(Member member) {
         this.member = member;
         member.getPosts().add(this);
     }
@@ -53,7 +53,7 @@ public class Post extends BaseTimeEntity {
     }
 
     // 생성 메서드
-    public static Post addPost(MemberEntity member, String title, Image image) {
+    public static Post addPost(Member member, String title, Image image) {
         Post post = new Post();
         post.title = title;
         post.setMember(member);
