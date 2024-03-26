@@ -40,6 +40,8 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member")
     private List<Post> posts = new ArrayList<>();
 
+    // 회원 사진 하나 만들어야함
+    private String imageUrl;
 
 
     public void updateMember(updateRequestDto updateRequestDto) {

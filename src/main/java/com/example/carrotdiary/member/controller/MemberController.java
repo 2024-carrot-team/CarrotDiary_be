@@ -43,6 +43,10 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("deleted Successfully");
     }
 
+    @GetMapping("/userProfile")
+    public ResponseEntity<MemberResponseDto> findProfile(@RequestBody String email) {
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.findProfile(email));
+    }
 
 
 }

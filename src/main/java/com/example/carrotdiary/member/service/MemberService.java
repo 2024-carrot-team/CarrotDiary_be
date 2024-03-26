@@ -72,4 +72,7 @@ public class MemberService implements UserDetailsService {
         memberRepository.delete(member);
     }
 
+    public MemberResponseDto findProfile(String email) {
+        return new MemberResponseDto(memberRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("entity not found")));
+    }
 }
