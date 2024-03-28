@@ -4,6 +4,7 @@ import static jakarta.persistence.FetchType.LAZY;
 
 import com.example.carrotdiary.diary.entity.Diary;
 import com.example.carrotdiary.global.common.BaseEntity;
+import com.example.carrotdiary.member.entity.Member;
 import com.example.carrotdiary.post.entity.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -66,6 +67,15 @@ public class Image extends BaseEntity {
     public void updateImage(String fileName, String imageUrl) {
         this.fileName = fileName;
         this.imageUrl = imageUrl;
+    }
+
+    public static Image addUserImage(String imageUrl, String fileName, Member member) {
+        Image image = new Image();
+        image.imageUrl = imageUrl;
+        image.fileName = fileName;
+        image.setMember(member);
+
+        return image;
     }
 
 
