@@ -1,6 +1,7 @@
 package com.example.carrotdiary.member.service;
 
 import com.example.carrotdiary.global.jwt.JwtUtils;
+import com.example.carrotdiary.image.service.ImageService;
 import com.example.carrotdiary.member.dto.MemberRequestDto;
 import com.example.carrotdiary.member.dto.MemberResponseDto;
 import com.example.carrotdiary.member.entity.MemberDetails;
@@ -13,6 +14,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,17 +25,17 @@ public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     private final PasswordEncoder passwordEncoder;
-
-    private final JwtUtils jwtUtil;
+    private final ImageService imageService;
 
     //C
-    public void createMember(MemberRequestDto memberRequestDto) {
+    public void createMember(MemberRequestDto memberRequestDto, MultipartFile pictureFile) throws IOException {
         Member member = Member.builder()
                 .email(memberRequestDto.email())
                 .password(passwordEncoder.encode(memberRequestDto.password()))
                 .nickname(memberRequestDto.nickname())
                 .brithDayTime(memberRequestDto.birthDayTime())
                 .role(memberRequestDto.role())
+                .image(imageService.uploadPostImage(pictureFile))
                 .build();
 
         memberRepository.save(member);
