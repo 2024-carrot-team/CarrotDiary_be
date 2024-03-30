@@ -32,6 +32,11 @@ public class MemberController {
 
     }
 
+    @GetMapping("/findMember/{memberId}")
+    public ResponseEntity<MemberResponseDto> findMemberById(@RequestBody Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.findByIdMember(id));
+    }
+
     @PatchMapping
     public ResponseEntity<String> updateMember(@RequestBody MemberRequestDto.updateRequestDto memberRequestDto, String email){
         memberService.updateMember(email, memberRequestDto);

@@ -57,6 +57,11 @@ public class MemberService implements UserDetailsService {
         return MemberResponseDto.fromEntity(member);
     }
 
+    public MemberResponseDto findByIdMember(Long id) throws UsernameNotFoundException {
+        Member member = memberRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("entity not found"));
+
+        return MemberResponseDto.fromEntity(member);
+    }
 
     //U 수정
     public void updateMember(String email, MemberRequestDto.updateRequestDto updateRequestDto) {
