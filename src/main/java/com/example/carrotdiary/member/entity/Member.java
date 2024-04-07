@@ -1,5 +1,6 @@
 package com.example.carrotdiary.member.entity;
 
+import com.example.carrotdiary.follow.entity.Follow;
 import com.example.carrotdiary.global.common.BaseTimeEntity;
 import com.example.carrotdiary.global.constants.Role;
 import com.example.carrotdiary.image.entity.Image;
@@ -26,11 +27,18 @@ public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(unique = true)
     private String email;
 
     private String password;
     private String nickname;
+
+    @OneToMany(mappedBy = "from_Member", fetch = FetchType.LAZY)
+    private List<Follow> followings;
+
+    @OneToMany(mappedBy = "to_Member", fetch = FetchType.LAZY)
+    private List<Follow> followers;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime brithDayTime;
