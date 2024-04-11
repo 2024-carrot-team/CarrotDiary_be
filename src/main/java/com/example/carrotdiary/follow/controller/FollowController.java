@@ -22,7 +22,7 @@ public class FollowController {
     //팔로우 Id를 path로 받을지 dto로 받을지 좀 고민해봐야할거같음
     @PostMapping("/Members/follow/{followId}")
     public ResponseEntity<String> follow(HttpServletRequest req, @PathVariable String followId) {
-        followService.follow(jwtUtils.getUserEmail(req),followId);
+        followService.follow(followId,jwtUtils.getUserEmail(req));
         return ResponseEntity.ok().build();
     }
 

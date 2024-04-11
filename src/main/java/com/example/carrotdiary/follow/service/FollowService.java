@@ -2,10 +2,13 @@ package com.example.carrotdiary.follow.service;
 
 import com.example.carrotdiary.follow.entity.Follow;
 import com.example.carrotdiary.follow.repository.FollowRepository;
+import com.example.carrotdiary.member.dto.MemberDetailDto;
 import com.example.carrotdiary.member.entity.Member;
 import com.example.carrotdiary.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -45,5 +48,10 @@ public class FollowService {
     public void deleteFollow(String toMemberFromRequest, String fromMemberFromRequest) {
         followRepository.deleteFollowByToMemberAndFromMember(getToMember(toMemberFromRequest), getFromMember(fromMemberFromRequest));
     }
+
+//    public List<MemberDetailDto> findAllFollowers (String fromMemberFromRequest) {
+//        List<Follow> followers = followRepository.findAllByFromMember(getFromMember(fromMemberFromRequest));
+//
+//    }
     
 }
