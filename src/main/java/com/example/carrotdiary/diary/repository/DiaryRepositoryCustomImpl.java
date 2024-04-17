@@ -4,9 +4,7 @@ import static com.example.carrotdiary.diary.entity.QDiary.diary;
 import static com.example.carrotdiary.postdiary.entity.QPostDiary.postDiary;
 
 import com.example.carrotdiary.diary.entity.Diary;
-import com.example.carrotdiary.diary.entity.DiarySearch;
 import com.example.carrotdiary.diary.entity.QDiary;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;

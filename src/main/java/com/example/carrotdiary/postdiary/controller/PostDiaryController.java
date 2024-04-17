@@ -1,6 +1,5 @@
 package com.example.carrotdiary.postdiary.controller;
 
-import com.example.carrotdiary.diary.entity.DiarySearch;
 import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.global.jwt.JwtUtils;
 import com.example.carrotdiary.postdiary.dto.PostDiaryRequestDto.PostDiarySearchDto;
