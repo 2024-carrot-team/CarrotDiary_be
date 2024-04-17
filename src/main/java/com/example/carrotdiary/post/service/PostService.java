@@ -36,7 +36,7 @@ public class PostService {
         Member member = memberRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new NoSuchElementException("조회된 아이디가 없습니다."));
 
-        Image image = imageService.uploadPostImage(file);
+        Image image = imageService.uploadImage(file);
 
         Post post = Post.addPost(member, postRequestDto.getTitle(), image);
 
@@ -73,7 +73,7 @@ public class PostService {
             if (postImage != null) {
                 imageService.deleteImage(postImage.getId());
             }
-            Image newImage = imageService.uploadPostImage(image);
+            Image newImage = imageService.uploadImage(image);
             post.updatePostImage(newImage);
         }
 
