@@ -40,8 +40,8 @@ public class PostDiaryController {
 
     @GetMapping("/main")
     public ResponseEntity<Result> getMainDiary(HttpServletRequest req,
-                                               @RequestParam(value = "page", defaultValue = "0") int page,
-                                               @RequestParam(value = "size", defaultValue = "5") int size) {
+                                               @RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "5") int size) {
         String userEmail = jwtUtils.getUserEmail(req);
         if (userEmail == null) {
             throw new IllegalArgumentException("need login");

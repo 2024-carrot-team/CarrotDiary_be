@@ -27,6 +27,8 @@ public class PostDiaryCustomImpl implements PostDiaryCustom{
                 .from(postDiary)
                 .join(postDiary.post, post).fetchJoin()
                 .orderBy(postDiary.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
 
