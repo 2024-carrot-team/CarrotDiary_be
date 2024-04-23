@@ -34,7 +34,7 @@ public class Image extends BaseEntity {
     @JoinColumn(name = "diary_id")
     private Diary diary;
 
-    // 연관관계 편의 메서드
+    //연관관계 편의 메서드
     public void setDiary(Diary diary) {
         this.diary = diary;
         diary.getImages().add(this);
@@ -73,7 +73,6 @@ public class Image extends BaseEntity {
         Image image = new Image();
         image.imageUrl = imageUrl;
         image.fileName = fileName;
-        image.setMember(member);
 
         return image;
     }
