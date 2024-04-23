@@ -17,8 +17,8 @@ public record MemberRequestDto(
         String nickname,
         LocalDateTime birthDayTime,
         Role role,
-        String adminToken,
-        String imageUrl
+        String adminToken
+//        String imageUrl
 ) {
 
     public boolean isAdmin() {
@@ -35,7 +35,7 @@ public record MemberRequestDto(
             String email,
             String password,
             String nickname,
-            String imageUrl,
+//            String imageUrl,
             LocalDateTime birthDayTime
     ) {}
 

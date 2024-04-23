@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -18,8 +17,8 @@ public class MemberController {
 
     private final MemberService memberService;
     @PostMapping
-    public ResponseEntity<String> signUp(@RequestBody MemberRequestDto memberRequestDto, MultipartFile pictureFile) throws IOException {
-            memberService.createMember(memberRequestDto,pictureFile);
+    public ResponseEntity<String> signUp(@RequestBody MemberRequestDto memberRequestDto) throws IOException {
+            memberService.createMember(memberRequestDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("Created");
     }
 

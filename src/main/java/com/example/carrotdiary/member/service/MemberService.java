@@ -1,6 +1,5 @@
 package com.example.carrotdiary.member.service;
 
-import com.example.carrotdiary.global.jwt.JwtUtils;
 import com.example.carrotdiary.image.service.ImageService;
 import com.example.carrotdiary.member.dto.MemberRequestDto;
 import com.example.carrotdiary.member.dto.MemberResponseDto;
@@ -28,20 +27,18 @@ public class MemberService implements UserDetailsService {
     private final ImageService imageService;
 
     //C
-    public void createMember(MemberRequestDto memberRequestDto, MultipartFile pictureFile) throws IOException {
+    public void createMember(MemberRequestDto memberRequestDto) throws IOException {
         Member member = Member.builder()
                 .email(memberRequestDto.email())
                 .password(passwordEncoder.encode(memberRequestDto.password()))
                 .nickname(memberRequestDto.nickname())
                 .brithDayTime(memberRequestDto.birthDayTime())
                 .role(memberRequestDto.role())
-                .image(imageService.uploadPostImage(pictureFile))
                 .build();
 
         memberRepository.save(member);
 
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
