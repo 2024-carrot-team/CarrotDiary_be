@@ -9,7 +9,6 @@ import com.example.carrotdiary.post.entity.Post;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +38,9 @@ public class Member extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "to_Member", fetch = FetchType.LAZY)
     private List<Follow> followers;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Image> images;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime brithDayTime;

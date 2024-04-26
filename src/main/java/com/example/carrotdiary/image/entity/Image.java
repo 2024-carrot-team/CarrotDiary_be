@@ -34,6 +34,10 @@ public class Image extends BaseEntity {
     @JoinColumn(name = "diary_id")
     private Diary diary;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     // 연관관계 편의 메서드
     public void setDiary(Diary diary) {
         this.diary = diary;
@@ -76,6 +80,9 @@ public class Image extends BaseEntity {
         image.setMember(member);
 
         return image;
+    }
+
+    private void setMember(Member member) {
     }
 
 
