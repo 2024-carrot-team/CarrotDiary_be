@@ -33,14 +33,11 @@ public class Member extends BaseTimeEntity {
     private String password;
     private String nickname;
 
-    @OneToMany(mappedBy = "from_Member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "followings", fetch = FetchType.LAZY)
     private List<Follow> followings;
 
-    @OneToMany(mappedBy = "to_Member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "followers", fetch = FetchType.LAZY)
     private List<Follow> followers;
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Image> images;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime brithDayTime;
@@ -54,7 +51,7 @@ public class Member extends BaseTimeEntity {
     // 회원 사진 하나 만들어야함
     private String imageUrl;
 
-    @OneToOne
+    @OneToOne(mappedBy = "member")
     private Image image;
 
 
@@ -65,7 +62,7 @@ public class Member extends BaseTimeEntity {
         this.brithDayTime = updateRequestDto.birthDayTime();
     }
 
-    public void setMember(Image image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 

@@ -1,15 +1,11 @@
 package com.example.carrotdiary.follow.service;
 
-import com.example.carrotdiary.follow.dto.FollowResponseDto;
 import com.example.carrotdiary.follow.entity.Follow;
 import com.example.carrotdiary.follow.repository.FollowRepository;
-import com.example.carrotdiary.member.dto.MemberDetailDto;
 import com.example.carrotdiary.member.entity.Member;
 import com.example.carrotdiary.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +27,8 @@ public class FollowService {
             throw new IllegalArgumentException("");
         } else {
             Follow follow = Follow.builder()
-                    .follower(follower)
-                    .following(following)
+                    .followers(follower)
+                    .followings(following)
                     .build();
         }
     }
@@ -47,7 +43,7 @@ public class FollowService {
 
     // 팔로우 삭제
     public void deleteFollow(String followRequest, String followingRequest) {
-        followRepository.deleteFollowByToMemberAndFromMember(getToMember(followRequest), getFromMember(followingRequest));
+        followRepository.deleteFollowByFollowersAndFollowings(getToMember(followRequest), getFromMember(followingRequest));
     }
 
     // follower 찾기 메소드 작성

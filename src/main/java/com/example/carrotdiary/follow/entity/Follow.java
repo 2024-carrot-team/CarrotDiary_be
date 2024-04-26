@@ -19,12 +19,12 @@ public class Follow extends BaseTimeEntity {
 
 
     @ManyToOne
-    @JoinColumn(name = "follower")
-    private Member follower;
+    @JoinColumn(name = "followers")
+    private Member followers;
 
     @ManyToOne
-    @JoinColumn(name = "following")
-    private Member following;
+    @JoinColumn(name = "followings")
+    private Member followings;
 
 
 }

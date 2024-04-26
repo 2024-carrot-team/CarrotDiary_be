@@ -6,13 +6,7 @@ import com.example.carrotdiary.diary.entity.Diary;
 import com.example.carrotdiary.global.common.BaseEntity;
 import com.example.carrotdiary.member.entity.Member;
 import com.example.carrotdiary.post.entity.Post;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +28,7 @@ public class Image extends BaseEntity {
     @JoinColumn(name = "diary_id")
     private Diary diary;
 
-    @ManyToOne(fetch = LAZY)
+    @OneToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -83,6 +77,7 @@ public class Image extends BaseEntity {
     }
 
     private void setMember(Member member) {
+        this.member = member;
     }
 
 
