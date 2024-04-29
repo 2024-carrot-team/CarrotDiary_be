@@ -35,7 +35,6 @@ public class MemberService implements UserDetailsService {
                 .nickname(memberRequestDto.nickname())
                 .brithDayTime(memberRequestDto.birthDayTime())
                 .role(memberRequestDto.role())
-                .imageUrl(imageService.uploadPostImage(pictureFile).getImageUrl())
                 .build();
         memberRepository.save(member);
 
