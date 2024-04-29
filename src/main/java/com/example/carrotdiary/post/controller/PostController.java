@@ -6,6 +6,7 @@ import com.example.carrotdiary.global.jwt.JwtUtils;
 import com.example.carrotdiary.post.dto.PostRequestDto;
 import com.example.carrotdiary.post.dto.PostResponseDto.PostIdDto;
 import com.example.carrotdiary.post.service.PostService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
