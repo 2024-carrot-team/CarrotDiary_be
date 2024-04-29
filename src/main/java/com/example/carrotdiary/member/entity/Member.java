@@ -1,5 +1,6 @@
 package com.example.carrotdiary.member.entity;
 
+import com.example.carrotdiary.follow.entity.Follow;
 import com.example.carrotdiary.global.common.BaseTimeEntity;
 import com.example.carrotdiary.global.constants.Role;
 import com.example.carrotdiary.image.entity.Image;
@@ -32,14 +33,11 @@ public class Member extends BaseTimeEntity {
     private String password;
     private String nickname;
 
-//    @OneToMany(mappedBy = "from_Member", fetch = FetchType.LAZY)
-//    private List<Follow> followings;
-//
-//    @OneToMany(mappedBy = "to_Member", fetch = FetchType.LAZY)
-//    private List<Follow> followers;
+    @OneToMany(mappedBy = "followings", fetch = FetchType.LAZY)
+    private List<Follow> followings;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Image> images;
+    @OneToMany(mappedBy = "followers", fetch = FetchType.LAZY)
+    private List<Follow> followers;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime brithDayTime;
@@ -48,14 +46,13 @@ public class Member extends BaseTimeEntity {
     private Role role;
 
     @OneToMany(mappedBy = "member")
-    @Builder.Default
-    private List<Post> posts = new ArrayList<>();
+    private List<Post> posts;
 
-//    // 회원 사진 하나 만들어야함
-//    private String imageUrl;
-//
-//    @OneToOne
-//    private Image image;
+    // 회원 사진 하나 만들어야함
+    private String imageUrl;
+
+    @OneToOne(mappedBy = "member")
+    private Image image;
 
 
     public void updateMember(updateRequestDto updateRequestDto) {
@@ -65,9 +62,9 @@ public class Member extends BaseTimeEntity {
         this.brithDayTime = updateRequestDto.birthDayTime();
     }
 
-//    public void setMember(Image image) {
-//        this.image = image;
-//    }
+    public void setImage(Image image) {
+        this.image = image;
+    }
 
 
 }

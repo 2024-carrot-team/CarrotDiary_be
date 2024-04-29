@@ -27,18 +27,20 @@ public class MemberService implements UserDetailsService {
     private final ImageService imageService;
 
     //C
-    public void createMember(MemberRequestDto memberRequestDto) throws IOException {
+    public void createMember(MemberRequestDto memberRequestDto, MultipartFile pictureFile) throws IOException {
         Member member = Member.builder()
                 .email(memberRequestDto.email())
                 .password(passwordEncoder.encode(memberRequestDto.password()))
                 .nickname(memberRequestDto.nickname())
                 .brithDayTime(memberRequestDto.birthDayTime())
                 .role(memberRequestDto.role())
+                .image(imageService.uploadImage(pictureFile))
                 .build();
 
         memberRepository.save(member);
 
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
