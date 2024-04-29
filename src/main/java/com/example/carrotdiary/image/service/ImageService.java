@@ -5,6 +5,9 @@ import com.example.carrotdiary.image.entity.Image;
 import com.example.carrotdiary.image.repository.ImageRepository;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.carrotdiary.member.dto.MemberRequestDto;
+import com.example.carrotdiary.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -58,6 +61,19 @@ public class ImageService {
 
         return postImage;
 
+
+    }
+
+    @Transactional
+    public Image uploadProfileImage(MultipartFile multipartFile, Member member) throws IOException {
+
+        ImageResponseDto imageResponseDto = uploadImageToS3(multipartFile);
+
+        Image postImage = Image.addUserImage(imageResponseDto.getFileName(), imageResponseDto.getImageUrl(),member);
+
+        imageRepository.save(postImage);
+
+        return postImage;
 
     }
 
