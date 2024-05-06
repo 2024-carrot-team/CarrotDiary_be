@@ -1,6 +1,5 @@
 package com.example.carrotdiary.member.service;
 
-import com.example.carrotdiary.global.jwt.JwtUtils;
 import com.example.carrotdiary.image.service.ImageService;
 import com.example.carrotdiary.member.dto.MemberRequestDto;
 import com.example.carrotdiary.member.dto.MemberResponseDto;
@@ -38,7 +37,7 @@ public class MemberService implements UserDetailsService {
                 .build();
         memberRepository.save(member);
 
-        member.setImage(imageService.uploadProfileImage(pictureFile, member));
+        member.setImageInMemberEntity(imageService.uploadProfileImage(pictureFile, member));
 
     }
 
