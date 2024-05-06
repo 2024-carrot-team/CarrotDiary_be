@@ -71,12 +71,12 @@ public class Image extends BaseEntity {
         Image image = new Image();
         image.imageUrl = imageUrl;
         image.fileName = fileName;
-        image.setMember(member);
+        image.setMemberInImageEntity(member);
 
         return image;
     }
 
-    private void setMember(Member member) {
+    public void setMemberInImageEntity(Member member) {
         this.member = member;
     }
 

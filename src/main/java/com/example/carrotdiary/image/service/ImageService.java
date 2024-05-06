@@ -112,6 +112,10 @@ public class ImageService {
         Image image = imageRepository.findById(imageId)
                 .orElseThrow(() -> new IllegalArgumentException("조회된 Image 아이디가 없습니다."));
 
+        if(image.getMember() != null) {
+            image.setMemberInImageEntity(null);
+        }
+
         String s3FileName = image.getFileName();
         imageRepository.delete(image);
         deleteImageFromS3(s3FileName);

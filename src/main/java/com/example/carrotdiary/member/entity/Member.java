@@ -60,7 +60,7 @@ public class Member extends BaseTimeEntity {
         this.brithDayTime = updateRequestDto.birthDayTime();
     }
 
-    public void setImage(Image image) {
+    public void setImageInMemberEntity(Image image) {
         this.image = image;
     }
 
