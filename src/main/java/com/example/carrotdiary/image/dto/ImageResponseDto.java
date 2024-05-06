@@ -10,7 +10,6 @@ public class ImageResponseDto {
 
     private String fileName;
     private String imageUrl;
-    private Member member;
 
     public ImageResponseDto(String fileName, String imageUrl) {
         this.fileName = fileName;
