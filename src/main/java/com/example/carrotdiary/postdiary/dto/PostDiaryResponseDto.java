@@ -25,6 +25,7 @@ public class PostDiaryResponseDto {
     public static class PostDiaryDto {
         private Long memberId;
         private String nickname;
+        private String memberProfileImageUrl;
         private Long postId;
         private Long postDiaryId;
         private List<DiaryMainDto> diaries;
@@ -32,6 +33,7 @@ public class PostDiaryResponseDto {
         public PostDiaryDto(PostDiary postDiary) {
             memberId = postDiary.getPost().getMember().getId();
             nickname = postDiary.getPost().getMember().getNickname();
+            memberProfileImageUrl = postDiary.getPost().getMember().getImage().getImageUrl();
             postId = postDiary.getPost().getId();
             postDiaryId = postDiary.getId();
             diaries = postDiary.getDiaries().stream()
