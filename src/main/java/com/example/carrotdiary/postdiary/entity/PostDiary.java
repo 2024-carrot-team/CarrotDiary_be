@@ -6,7 +6,6 @@ import com.example.carrotdiary.diary.entity.Diary;
 import com.example.carrotdiary.global.common.BaseTimeEntity;
 import com.example.carrotdiary.post.entity.Post;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +26,7 @@ public class PostDiary extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_diary_id")
+    @JoinColumn(name = "post_diary_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)

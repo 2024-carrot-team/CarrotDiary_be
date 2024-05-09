@@ -1,8 +1,10 @@
 package com.example.carrotdiary.image.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class ImageResponseDto {
 
     private String fileName;
@@ -12,7 +14,6 @@ public class ImageResponseDto {
         this.fileName = fileName;
         this.imageUrl = imageUrl;
     }
-
 
 
 }

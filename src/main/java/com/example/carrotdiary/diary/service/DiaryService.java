@@ -12,15 +12,19 @@ import com.example.carrotdiary.diary.repository.DiaryRepository;
 import com.example.carrotdiary.image.entity.Image;
 import com.example.carrotdiary.image.repository.ImageRepository;
 import com.example.carrotdiary.image.service.ImageService;
+import com.example.carrotdiary.postdiary.dto.PostDiaryResponseDto.PostDiaryDto;
 import com.example.carrotdiary.postdiary.entity.PostDiary;
 import com.example.carrotdiary.postdiary.repository.PostDiaryRepository;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,22 +55,33 @@ public class DiaryService {
         return new DiaryIdDto(diary.getId());
     }
 
-    // Diary 조회
-    /*
-     postDiary, post, diary -> post(ToOne), diary(ToMany)
-     post 랑 fetch join 하고 diary 랑은 지연로딩으로 최적화 batch_size
-     */
-
+    // 메인화면 Diary 조회
     @Transactional
-    public Result getPreviewDiary(Long postId, Pageable pageable) {
+    public Result getMainDiary() {
 
-        Page<Diary> pageDiaries = diaryRepository.findPostDiaryAndDiaryByPostIdPaging(postId, pageable);
-        List<Diary> diaries = pageDiaries.getContent();
+        List<PostDiary> allPostDiaries = postDiaryRepository.findAllPostDiaries();
 
-        List<DiaryContentDto> result = diaries.stream()
-                .map(DiaryContentDto::new)
-                .toList();
+        List<PostDiaryDto> result = new ArrayList<>();
+        for (PostDiary postDiary : allPostDiaries) {
+            PostDiaryDto postDiaryDto = new PostDiaryDto(postDiary);
 
+            result.add(postDiaryDto);
+        }
+        return new Result(result);
+
+    }
+
+    // Diary 조회
+    @Transactional
+    public Result getPreviewDiary(Long postId) {
+        List<Long> postDiaryId = postDiaryRepository.findIdsByPostId(postId);
+        List<DiaryContentDto> result = new ArrayList<>();
+
+        for (Long id : postDiaryId) {
+            Page<Diary> diary = diaryRepository.findAscByPostDiaryId(id, PageRequest.of(0,1));
+            result.addAll(diary.map(DiaryContentDto::new)
+                    .getContent());
+        }
         return new Result(result);
     }
 
@@ -79,6 +94,8 @@ public class DiaryService {
 
         return new Result(result);
     }
+
+
 
     @Transactional
     public Result getDiary(Long diaryId) {
