@@ -34,10 +34,10 @@ public class MemberService implements UserDetailsService {
                 .nickname(memberRequestDto.nickname())
                 .brithDayTime(memberRequestDto.birthDayTime())
                 .role(memberRequestDto.role())
+                .image(imageService.uploadImage(pictureFile))
                 .build();
-        memberRepository.save(member);
 
-        member.setImageInMemberEntity(imageService.uploadProfileImage(pictureFile, member));
+        memberRepository.save(member);
 
     }
 
@@ -50,7 +50,7 @@ public class MemberService implements UserDetailsService {
     }
 
     //R 단건조회
-    public MemberResponseDto checkMemberDetails(String email) throws UsernameNotFoundException {
+    public MemberResponseDto checkMemberDetails(String email) throws UsernameNotFoundException{
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Member cannot be found"));
 
         return MemberResponseDto.fromEntity(member);
@@ -75,7 +75,7 @@ public class MemberService implements UserDetailsService {
 
     public void deleteMember(String email) {
 
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("entity not found"));
+        Member member = memberRepository.findByEmail(email).orElseThrow(() ->new EntityNotFoundException("entity not found"));
 
         memberRepository.delete(member);
     }

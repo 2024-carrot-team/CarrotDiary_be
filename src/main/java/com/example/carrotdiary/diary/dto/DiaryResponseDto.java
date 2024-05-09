@@ -13,17 +13,26 @@ import lombok.NoArgsConstructor;
 public class DiaryResponseDto {
 
     @Getter
-    public static class DiaryContentDto {
+    public static class DiaryContentDto implements Comparable<DiaryContentDto>{
         private Long memberId;
         private Long postDiaryId;
         private String content;
+        private List<ImageInfo> imageInfo;
         private LocalDateTime diaryDate;
 
         public DiaryContentDto(Diary diary) {
             memberId = diary.getPostDiary().getPost().getMember().getId();
             postDiaryId = diary.getPostDiary().getId();
             content = diary.getContent();
-            diaryDate = diary.getCreatDate();
+            imageInfo = diary.getImages().stream()
+                    .map(image -> new ImageInfo(image.getId(), image.getImageUrl()))
+                    .collect(Collectors.toList());
+            diaryDate = diary.getCreateDate();
+        }
+
+        @Override
+        public int compareTo(DiaryContentDto o) {
+            return this.diaryDate.compareTo(o.diaryDate);
         }
     }
 
