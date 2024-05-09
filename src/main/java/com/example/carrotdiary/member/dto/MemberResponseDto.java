@@ -1,6 +1,6 @@
 package com.example.carrotdiary.member.dto;
 
-import com.example.carrotdiary.member.entity.Member;
+import com.example.carrotdiary.member.entity.MemberEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,18 +17,18 @@ public class MemberResponseDto {
     private final String nickname;
     private final LocalDateTime birthDayTime;
 
-    public MemberResponseDto(Member member) {
-        this.email = member.getEmail();
-        this.nickname = member.getNickname();
-        this.birthDayTime = member.getBrithDayTime();
+    public MemberResponseDto(MemberEntity memberEntity) {
+        this.email = memberEntity.getEmail();
+        this.nickname = memberEntity.getNickname();
+        this.birthDayTime = memberEntity.getBrithDayTime();
     }
 
-    public static MemberResponseDto fromEntity(Member member){
+    public static MemberResponseDto fromEntity(MemberEntity memberEntity){
 
         return MemberResponseDto.builder()
-                .email(member.getEmail())
-                .nickname(member.getNickname())
-                .birthDayTime(member.getBrithDayTime())
+                .email(memberEntity.getEmail())
+                .nickname(memberEntity.getNickname())
+                .birthDayTime(memberEntity.getBrithDayTime())
                 .build();
 
     }

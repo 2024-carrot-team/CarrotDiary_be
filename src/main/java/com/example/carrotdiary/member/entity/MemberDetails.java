@@ -10,7 +10,7 @@ import java.util.Collections;
 
 @RequiredArgsConstructor
 public class MemberDetails implements UserDetails {
-    private final Member member;
+    private final MemberEntity memberEntity;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -19,12 +19,12 @@ public class MemberDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return member.getPassword();
+        return memberEntity.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return member.getEmail();
+        return memberEntity.getEmail();
     }
 
     @Override
@@ -47,3 +47,5 @@ public class MemberDetails implements UserDetails {
         return true;
     }
 }
+
+

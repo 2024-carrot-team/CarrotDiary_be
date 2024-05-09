@@ -1,6 +1,6 @@
 package com.example.carrotdiary.global.security;
 
-import com.example.carrotdiary.member.entity.Member;
+import com.example.carrotdiary.member.entity.MemberEntity;
 import com.example.carrotdiary.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Member member = memberRepository.findByEmail(email)
+        MemberEntity member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("can not find member with email"));
         return new UserDetailsImpl(member);
     }

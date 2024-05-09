@@ -65,4 +65,6 @@ public class Diary extends BaseTimeEntity {
     public void updateDiaryImage(List<Image> images) {
         this.images = images;
     }
+
+
 }

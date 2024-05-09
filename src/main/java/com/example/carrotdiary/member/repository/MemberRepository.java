@@ -1,15 +1,15 @@
 package com.example.carrotdiary.member.repository;
 
-import com.example.carrotdiary.member.entity.Member;
+import com.example.carrotdiary.member.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
-    Optional<Member> findByEmail(String email);
+    Optional<MemberEntity> findByEmail(String email);
 
     boolean existsByEmail(String email);
 }
