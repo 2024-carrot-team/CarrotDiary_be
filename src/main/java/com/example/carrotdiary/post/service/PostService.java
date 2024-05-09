@@ -3,7 +3,7 @@ package com.example.carrotdiary.post.service;
 import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.image.entity.Image;
 import com.example.carrotdiary.image.service.ImageService;
-import com.example.carrotdiary.member.entity.MemberEntity;
+import com.example.carrotdiary.member.entity.Member;
 import com.example.carrotdiary.member.repository.MemberRepository;
 import com.example.carrotdiary.post.dto.PostRequestDto;
 import com.example.carrotdiary.post.dto.PostResponseDto;
@@ -33,10 +33,10 @@ public class PostService {
     @Transactional
     public PostIdDto createPost(String userEmail, PostRequestDto postRequestDto, MultipartFile file) throws IOException {
 
-        MemberEntity member = memberRepository.findByEmail(userEmail)
+        Member member = memberRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new NoSuchElementException("조회된 아이디가 없습니다."));
 
-        Image image = imageService.uploadPostImage(file);
+        Image image = imageService.uploadImage(file);
 
         Post post = Post.addPost(member, postRequestDto.getTitle(), image);
 
@@ -73,7 +73,7 @@ public class PostService {
             if (postImage != null) {
                 imageService.deleteImage(postImage.getId());
             }
-            Image newImage = imageService.uploadPostImage(image);
+            Image newImage = imageService.uploadImage(image);
             post.updatePostImage(newImage);
         }
 

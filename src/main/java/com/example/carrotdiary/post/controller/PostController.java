@@ -6,9 +6,12 @@ import com.example.carrotdiary.global.jwt.JwtUtils;
 import com.example.carrotdiary.post.dto.PostRequestDto;
 import com.example.carrotdiary.post.dto.PostResponseDto.PostIdDto;
 import com.example.carrotdiary.post.service.PostService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -56,20 +59,23 @@ public class PostController {
 
         return ResponseEntity.ok(posts);
     }
+
     @GetMapping("post/{postId}")
-    public ResponseEntity<Result> getPreviewDiary(HttpServletRequest req, @PathVariable("postId") Long postId) {
+    public ResponseEntity<Result> getPreviewDiary(HttpServletRequest req,
+                                                    @PathVariable("postId") Long postId,
+                                                    @RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "5") int size) {
 
         String userEmail = jwtUtils.getUserEmail(req);
         if (userEmail == null) {
             throw new IllegalArgumentException("need login");
         }
 
-        Result previewDiary = diaryService.getPreviewDiary(postId);
+        Pageable pageable = PageRequest.of(page, size);
+        Result previewDiary = diaryService.getPreviewDiary(postId, pageable);
 
         return ResponseEntity.ok(previewDiary);
     }
-
-
 
     @PatchMapping("/post/{postId}")
     public ResponseEntity<Result> updatePost(HttpServletRequest req,
