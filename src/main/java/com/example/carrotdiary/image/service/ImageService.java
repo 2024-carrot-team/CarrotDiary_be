@@ -5,6 +5,8 @@ import com.example.carrotdiary.image.entity.Image;
 import com.example.carrotdiary.image.repository.ImageRepository;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.carrotdiary.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -61,6 +63,19 @@ public class ImageService {
 
     }
 
+    @Transactional
+    public Image uploadProfileImage(MultipartFile multipartFile, Member member) throws IOException {
+
+        ImageResponseDto imageResponseDto = uploadImageToS3(multipartFile);
+
+        Image postImage = Image.addUserImage(imageResponseDto.getFileName(), imageResponseDto.getImageUrl(),member);
+
+        imageRepository.save(postImage);
+
+        return postImage;
+
+    }
+
     // Image 수정
     @Transactional
     public void updateImage(Long imageId, MultipartFile multipartFile) throws IOException {
@@ -95,6 +110,10 @@ public class ImageService {
     public void deleteImage(Long imageId) {
         Image image = imageRepository.findById(imageId)
                 .orElseThrow(() -> new IllegalArgumentException("조회된 Image 아이디가 없습니다."));
+
+        if(image.getMember() != null) {
+            image.setMemberInImageEntity(null);
+        }
 
         String s3FileName = image.getFileName();
         imageRepository.delete(image);
