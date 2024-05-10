@@ -34,10 +34,10 @@ public class MemberService implements UserDetailsService {
                 .nickname(memberRequestDto.nickname())
                 .brithDayTime(memberRequestDto.birthDayTime())
                 .role(memberRequestDto.role())
-                .image(imageService.uploadImage(pictureFile))
                 .build();
-
         memberRepository.save(member);
+
+        member.setImageInMemberEntity(imageService.uploadProfileImage(pictureFile, member));
 
     }
 
