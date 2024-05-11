@@ -6,7 +6,6 @@ import com.example.carrotdiary.image.repository.ImageRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.carrotdiary.member.dto.MemberRequestDto;
 import com.example.carrotdiary.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,15 +50,15 @@ public class ImageService {
     // 단일 Image 등록
     // Image 등록 메소드 이름 변경이 필요할것같음. Member에서도 사용하게 됨.
     @Transactional
-    public Image uploadPostImage(MultipartFile multipartFile) throws IOException {
+    public Image uploadImage(MultipartFile multipartFile) throws IOException {
 
         ImageResponseDto imageResponseDto = uploadImageToS3(multipartFile);
 
-        Image postImage = new Image(imageResponseDto.getFileName(), imageResponseDto.getImageUrl());
+        Image image = new Image(imageResponseDto.getFileName(), imageResponseDto.getImageUrl());
 
-        imageRepository.save(postImage);
+        imageRepository.save(image);
 
-        return postImage;
+        return image;
 
 
     }

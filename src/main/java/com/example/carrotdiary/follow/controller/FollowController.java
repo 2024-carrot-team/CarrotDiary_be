@@ -2,9 +2,7 @@ package com.example.carrotdiary.follow.controller;
 
 import com.example.carrotdiary.follow.service.FollowService;
 import com.example.carrotdiary.global.jwt.JwtUtils;
-import com.example.carrotdiary.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
