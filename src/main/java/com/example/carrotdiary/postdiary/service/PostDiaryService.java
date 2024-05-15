@@ -74,7 +74,8 @@ public class PostDiaryService {
 
     // 삭제
     @Transactional
-    public void deletePostDiary(Long postDiaryId) {
+    public void deletePostDiary(String userEmail, Long postDiaryId) {
+        validateEmail(userEmail, postDiaryId);
 
         PostDiary postDiary = postDiaryRepository.findById(postDiaryId)
                 .orElseThrow(() -> new NoSuchElementException("조회된 아이디가 없습니다."));
@@ -82,5 +83,12 @@ public class PostDiaryService {
         Post post = postDiary.getPost();
 
         postDiaryRepository.delete(postDiary);
+    }
+
+    private void validateEmail(String userEmail, Long postDiaryId) {
+        String emailOfPostDiary = postDiaryRepository.findMemberEmailByPostDiaryId(postDiaryId);
+        if (!userEmail.equals(emailOfPostDiary)) {
+            throw new IllegalArgumentException("권한이 없습니다.");
+        }
     }
 }

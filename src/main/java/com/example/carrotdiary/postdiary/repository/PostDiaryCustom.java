@@ -10,4 +10,5 @@ public interface PostDiaryCustom {
     Page<PostDiary> findAllPostDiariesPaging(Pageable pageable);
 
     Page<PostDiary> findPostDiaryBySearch(DiarySearch diarySearch, String searchContent, Pageable pageable);
+    String findMemberEmailByPostDiaryId(Long postDiaryId);
 }

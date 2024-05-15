@@ -80,7 +80,7 @@ public class DiaryController {
             throw new IllegalArgumentException("need login");
         }
 
-        Result result = diaryService.updateDiary(diaryId, updateDiaryDto, images);
+        Result result = diaryService.updateDiary(userEmail, diaryId, updateDiaryDto, images);
 
         return ResponseEntity.ok(result);
     }
@@ -92,7 +92,7 @@ public class DiaryController {
             throw new IllegalArgumentException("need login");
         }
 
-        diaryService.deleteDiary(diaryId);
+        diaryService.deleteDiary(userEmail, diaryId);
 
         return ResponseEntity.noContent().build();
     }

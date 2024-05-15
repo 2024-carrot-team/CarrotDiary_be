@@ -1,6 +1,8 @@
 package com.example.carrotdiary.diary.repository;
 
 import static com.example.carrotdiary.diary.entity.QDiary.diary;
+import static com.example.carrotdiary.member.entity.QMember.member;
+import static com.example.carrotdiary.post.entity.QPost.post;
 import static com.example.carrotdiary.postdiary.entity.QPostDiary.postDiary;
 
 import com.example.carrotdiary.diary.entity.Diary;
@@ -59,5 +61,17 @@ public class DiaryRepositoryCustomImpl implements DiaryRepositoryCustom {
                         )));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
+    }
+
+    @Override
+    public String findMemberEmailByDiaryId(Long diaryId) {
+        return jpaQueryFactory
+                .select(member.email)
+                .from(diary)
+                .join(diary.postDiary, postDiary)
+                .join(postDiary.post, post)
+                .join(post.member, member)
+                .where(diary.id.eq(diaryId))
+                .fetchOne();
     }
 }
