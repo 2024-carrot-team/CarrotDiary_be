@@ -2,7 +2,7 @@ package com.example.carrotdiary.diary.service;
 
 
 
-import com.example.carrotdiary.diary.dto.DiaryRequestDto;
+import com.example.carrotdiary.diary.dto.DiaryRequestDto.UpdateDiaryDto;
 import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryIdDto;
 import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryContentDto;
@@ -91,7 +91,7 @@ public class DiaryService {
     }
 
     @Transactional
-    public Result updateDiary(String userEmail, Long diaryId, DiaryRequestDto.updateDiaryDto updateDiaryDto, List<MultipartFile> images) throws IOException {
+    public Result updateDiary(String userEmail, Long diaryId, UpdateDiaryDto updateDiaryDto, List<MultipartFile> images) throws IOException {
         validateEmail(userEmail, diaryId);
 
         Diary diary = diaryRepository.findById(diaryId)

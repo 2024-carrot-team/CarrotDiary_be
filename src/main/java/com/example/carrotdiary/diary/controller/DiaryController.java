@@ -1,6 +1,7 @@
 package com.example.carrotdiary.diary.controller;
 
-import com.example.carrotdiary.diary.dto.DiaryRequestDto;
+import com.example.carrotdiary.diary.dto.DiaryRequestDto.CreateDiaryDto;
+import com.example.carrotdiary.diary.dto.DiaryRequestDto.UpdateDiaryDto;
 import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryIdDto;
 import com.example.carrotdiary.diary.service.DiaryService;
 import com.example.carrotdiary.global.common.Result;
@@ -30,7 +31,7 @@ public class DiaryController {
 
     @PostMapping("/diary/{postDiaryId}")
     public ResponseEntity<DiaryIdDto> createDiary(HttpServletRequest req, @PathVariable Long postDiaryId,
-                                            @ModelAttribute DiaryRequestDto.createDiaryDto diaryDto,
+                                            @ModelAttribute CreateDiaryDto diaryDto,
                                             @RequestParam List<MultipartFile> images) throws IOException {
 
         String userEmail = jwtUtils.getUserEmail(req);
@@ -73,7 +74,7 @@ public class DiaryController {
 
     @PatchMapping("/diary/{diaryId}")
     public ResponseEntity<Result> updateDiary(HttpServletRequest req, @PathVariable("diaryId") Long diaryId,
-                                              @ModelAttribute DiaryRequestDto.updateDiaryDto updateDiaryDto,
+                                              @ModelAttribute UpdateDiaryDto updateDiaryDto,
                                               @RequestParam(required = false) List<MultipartFile> images) throws IOException {
         String userEmail = jwtUtils.getUserEmail(req);
         if (userEmail == null) {
