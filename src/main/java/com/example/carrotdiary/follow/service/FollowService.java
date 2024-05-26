@@ -1,11 +1,15 @@
 package com.example.carrotdiary.follow.service;
 
+import com.example.carrotdiary.follow.dto.FollowResponseDto;
 import com.example.carrotdiary.follow.entity.Follow;
 import com.example.carrotdiary.follow.repository.FollowRepository;
 import com.example.carrotdiary.member.entity.Member;
 import com.example.carrotdiary.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -14,42 +18,52 @@ public class FollowService {
     private final MemberRepository memberRepository;
     private final FollowRepository followRepository;
 
-    public void follow(String followerRequest, String followingRequest) {
-        // 과연 Member Entity를 Follow 도메인에서 관리하는게 맞는가 ?
-        // Follow 도메인은 Member 도메인에 들어가야하려나? 조금 고민해보자.
+    public void follow(String followerEmail, String followingEmail) {
+        Member follower = getMemberByEmail(followerEmail);
+        Member following = getMemberByEmail(followingEmail);
 
-        Member follower = getToMember(followerRequest);
-
-        Member following = getFromMember(followingRequest);
-
-
-        if (follower == following || follower == null || following == null) {
-            throw new IllegalArgumentException("");
-        } else {
-            Follow follow = Follow.builder()
-                    .followers(follower)
-                    .followings(following)
-                    .build();
+        if (follower.equals(following)) {
+            throw new IllegalArgumentException("자기 자신을 팔로우 할 수 없습니다");
         }
+        // 중복된 팔로우 관계가 있는지 확인
+        if (followRepository.findByFollowerAndFollowing(follower, following).isPresent()) {
+            throw new IllegalStateException("이미 팔로우중인 유저입니다.");
+        }
+
+        Follow follow = Follow.builder()
+                .follower(follower)
+                .following(following)
+                .build();
+
+        followRepository.save(follow);
     }
 
-    private Member getFromMember(String followingRequest) {
-        return memberRepository.findByEmail(followingRequest).orElseThrow(()-> new IllegalArgumentException("Could not find followingRequest"));
+    public void unfollow(String followerEmail, String followingEmail) {
+        Member follower = getMemberByEmail(followerEmail);
+        Member following = getMemberByEmail(followingEmail);
+
+        followRepository.deleteFollowByFollowerAndFollowing(follower, following);
     }
 
-    private Member getToMember(String followRequest) {
-        return memberRepository.findByEmail(followRequest).orElseThrow(() -> new IllegalArgumentException("Could not find followRequest"));
+    public List<FollowResponseDto> getFollowers(String email) {
+        Member member = getMemberByEmail(email);
+        List<Follow> follows = followRepository.findByFollowing(member);
+
+        return follows.stream()
+                .map(follow -> FollowResponseDto.from(follow.getFollower()))
+                .collect(Collectors.toList());
     }
 
-    // 팔로우 삭제
-    public void deleteFollow(String followRequest, String followingRequest) {
-        followRepository.deleteFollowByFollowersAndFollowings(getToMember(followRequest), getFromMember(followingRequest));
-    }
+    public List<FollowResponseDto> getFollowings(String email) {
+        Member member = getMemberByEmail(email);
+        List<Follow> follows = followRepository.findByFollower(member);
 
-    // follower 찾기 메소드 작성
-//    public List<FollowResponseDto> findAllFollowers (String fromMemberFromRequest) {
-//        List<Follow> followers = followRepository.findAllByFromMember(getFromMember(fromMemberFromRequest));
-//
-//    }
-//
+        return follows.stream()
+                .map(follow -> FollowResponseDto.from(follow.getFollowing()))
+                .collect(Collectors.toList());
+    }
+    private Member getMemberByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Could not find member with email: " + email));
+    }
 }

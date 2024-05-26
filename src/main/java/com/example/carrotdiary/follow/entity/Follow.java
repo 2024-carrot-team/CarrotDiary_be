@@ -5,26 +5,27 @@ import com.example.carrotdiary.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class Follow extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @ManyToOne
     @JoinColumn(name = "followers")
-    private Member followers;
+    private Member follower;
 
     @ManyToOne
     @JoinColumn(name = "followings")
-    private Member followings;
+    private Member following;
 
 
 }
