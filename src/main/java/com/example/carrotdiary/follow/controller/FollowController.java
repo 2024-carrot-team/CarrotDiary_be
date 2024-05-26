@@ -19,16 +19,16 @@ public class FollowController {
     private final JwtUtils jwtUtils;
 
     //팔로우 Id를 path로 받을지 dto로 받을지 좀 고민해봐야할거같음
-    @PostMapping("{followId}")
-    public ResponseEntity<String> follow(HttpServletRequest req, @PathVariable String followId) {
-        followService.follow(followId,jwtUtils.getUserEmail(req));
+    @PostMapping("{followEmail}")
+    public ResponseEntity<String> follow(HttpServletRequest req, @PathVariable String followEmail) {
+        followService.follow(followEmail,jwtUtils.getUserEmail(req));
         return ResponseEntity.ok().build();
     }
 
     //삭제 컨트롤러 코드 추가
-    @DeleteMapping("{followId}")
-    public ResponseEntity<String> unfollow(HttpServletRequest req, @PathVariable String followId) {
-        followService.unfollow(jwtUtils.getUserEmail(req),followId);
+    @DeleteMapping("{followEmail}")
+    public ResponseEntity<String> unfollow(HttpServletRequest req, @PathVariable String followEmail) {
+        followService.unfollow(jwtUtils.getUserEmail(req), followEmail);
         return ResponseEntity.noContent().build();
     }
 
