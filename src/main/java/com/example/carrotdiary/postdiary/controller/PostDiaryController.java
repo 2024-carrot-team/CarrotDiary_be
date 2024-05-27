@@ -80,10 +80,9 @@ public class PostDiaryController {
             throw new IllegalArgumentException("need login");
         }
 
-        postDiaryService.deletePostDiary(postDiaryId);
+        postDiaryService.deletePostDiary(userEmail, postDiaryId);
         return ResponseEntity.noContent().build();
 
     }
 }
-
 

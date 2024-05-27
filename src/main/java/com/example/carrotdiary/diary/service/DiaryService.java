@@ -2,7 +2,7 @@ package com.example.carrotdiary.diary.service;
 
 
 
-import com.example.carrotdiary.diary.dto.DiaryRequestDto;
+import com.example.carrotdiary.diary.dto.DiaryRequestDto.UpdateDiaryDto;
 import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryIdDto;
 import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.diary.dto.DiaryResponseDto.DiaryContentDto;
@@ -91,7 +91,9 @@ public class DiaryService {
     }
 
     @Transactional
-    public Result updateDiary(Long diaryId, DiaryRequestDto.updateDiaryDto updateDiaryDto, List<MultipartFile> images) throws IOException {
+    public Result updateDiary(String userEmail, Long diaryId, UpdateDiaryDto updateDiaryDto, List<MultipartFile> images) throws IOException {
+        validateEmail(userEmail, diaryId);
+
         Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new NoSuchElementException("조회된 Diary 가 없습니다."));
 
@@ -116,11 +118,18 @@ public class DiaryService {
 
     // Diary 삭제
     @Transactional
-    public void deleteDiary(Long diaryId) {
+    public void deleteDiary(String userEmail, Long diaryId) {
+        validateEmail(userEmail, diaryId);
 
         Diary diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new NoSuchElementException("조회된 Diary 아이디가 없습니다."));
 
         diaryRepository.delete(diary);
+    }
+    private void validateEmail(String userEmail, Long diaryId) {
+        String emailOfDiary = diaryRepository.findMemberEmailByDiaryId(diaryId);
+        if (!userEmail.equals(emailOfDiary)) {
+            throw new IllegalArgumentException("권한이 없습니다.");
+        }
     }
 }

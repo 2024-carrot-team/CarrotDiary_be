@@ -10,4 +10,6 @@ public interface DiaryRepositoryCustom {
     List<Diary> findByPostDiaryId(Long postDiaryId);
 
     Page<Diary> findPostDiaryAndDiaryByPostIdPaging(Long postId, Pageable pageable);
+
+    String findMemberEmailByDiaryId(Long diaryId);
 }

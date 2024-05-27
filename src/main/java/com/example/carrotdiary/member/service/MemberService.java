@@ -84,8 +84,8 @@ public class MemberService implements UserDetailsService {
         return new MemberResponseDto(memberRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("entity not found")));
     }
 
-
     public String findNicknameByEmail(String email) {
       return  memberRepository.findByEmail(email).orElseThrow(()->new EntityNotFoundException("entity not found")).getNickname();
     }
 }
+
