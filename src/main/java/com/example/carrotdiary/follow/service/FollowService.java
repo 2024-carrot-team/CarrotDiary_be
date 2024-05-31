@@ -66,4 +66,13 @@ public class FollowService {
         return memberRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Could not find member with email: " + email));
     }
+
+    //팔로우 중인지 아닌지 확인하는 로직
+    //추후 게시글의 팔로우 공개 로직에 사용하면 될듯?
+    public boolean isFollowing(String followerEmail, String followingEmail) {
+        Member follower = getMemberByEmail(followerEmail);
+        Member following = getMemberByEmail(followingEmail);
+
+        return followRepository.findByFollowerAndFollowing(follower, following).isPresent();
+    }
 }
