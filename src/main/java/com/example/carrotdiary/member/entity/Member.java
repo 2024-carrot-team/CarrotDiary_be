@@ -33,10 +33,10 @@ public class Member extends BaseTimeEntity {
     private String password;
     private String nickname;
 
-    @OneToMany(mappedBy = "followings", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "following", fetch = FetchType.LAZY)
     private List<Follow> followings;
 
-    @OneToMany(mappedBy = "followers", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "follower", fetch = FetchType.LAZY)
     private List<Follow> followers;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
