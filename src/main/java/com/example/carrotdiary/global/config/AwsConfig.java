@@ -1,11 +1,14 @@
 package com.example.carrotdiary.global.config;
 
+import com.amazonaws.services.sns.AmazonSNS;
+import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.sns.SnsClient;
 
 @Configuration
 public class AwsConfig {
@@ -26,6 +29,11 @@ public class AwsConfig {
                 .build();
     }
 
+    @Bean
+    public AmazonSNS amazonSNS() {
+        return AmazonSNSClientBuilder.standard().build();
+    }
+
     private AwsCredentials awsCredentials() {
         return new AwsCredentials() {
             @Override
@@ -39,4 +47,6 @@ public class AwsConfig {
             }
         };
     }
+
+
 }
