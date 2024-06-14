@@ -18,6 +18,7 @@ public class FollowService {
 
     private final MemberRepository memberRepository;
     private final FollowRepository followRepository;
+    private final DeviceTokenService deviceTokenService;
 
     //팔로우 대상  - followee
     //팔로우 하는 사람 - follower
@@ -35,10 +36,13 @@ public class FollowService {
 
         Follow follow = Follow.builder()
                 .follower(follower)
-                .following(followee)
+                .followee(followee)
                 .build();
 
         followRepository.save(follow);
+
+
+
     }
 
     public void unfollow(String followerEmail, String followeeEmail) {
