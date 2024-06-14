@@ -14,6 +14,8 @@ public class NotificationService {
     public void sendFollowNotification(String topicArn, String follower, String followee) {
         String message = String.format("%s님이 당신을 팔로잉 합니다", followee);
 
+        notificationMessagingTemplate.sendNotification(topicArn, message,"팔로우 알림");
+
     }
 
 }

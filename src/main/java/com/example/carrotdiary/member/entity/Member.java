@@ -34,7 +34,7 @@ public class Member extends BaseTimeEntity {
     private String nickname;
 
     @OneToMany(mappedBy = "followee", fetch = FetchType.LAZY)
-    private List<Follow> followings;
+    private List<Follow> followee;
 
     @OneToMany(mappedBy = "follower", fetch = FetchType.LAZY)
     private List<Follow> followers;
