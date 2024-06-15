@@ -85,6 +85,7 @@ public class MemberService implements UserDetailsService {
     }
 
 
+    //이메일 기반 닉네임 찾기 - 요청
     public String findNicknameByEmail(String email) {
       return  memberRepository.findByEmail(email).orElseThrow(()->new EntityNotFoundException("entity not found")).getNickname();
     }

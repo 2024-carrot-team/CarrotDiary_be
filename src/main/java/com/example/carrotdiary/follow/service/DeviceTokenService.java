@@ -28,10 +28,12 @@ public class DeviceTokenService {
     }
 
     private String createSnsEndpoint(String token) {
+
         CreatePlatformEndpointRequest request = new CreatePlatformEndpointRequest()
                 .withPlatformApplicationArn(platformApplicationArn)
                 .withToken(token);
         CreatePlatformEndpointResult result = amazonSNS.createPlatformEndpoint(request);
+
         return result.getEndpointArn();
     }
 
