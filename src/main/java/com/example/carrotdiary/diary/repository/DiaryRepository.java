@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
-    @Query("select d from Diary d where d.postDiary.id = :postDiaryId order by d.creatDate asc ")
+    @Query("select d from Diary d where d.postDiary.id = :postDiaryId order by d.createDate asc ")
     Page<Diary> findAscByPostDiaryId(Long postDiaryId, Pageable pageable);
     List<Diary> findByPostDiaryId(Long postDiaryId);
 

@@ -23,7 +23,7 @@ public class DiaryResponseDto {
             memberId = diary.getPostDiary().getPost().getMember().getId();
             postDiaryId = diary.getPostDiary().getId();
             content = diary.getContent();
-            diaryDate = diary.getCreatDate();
+            diaryDate = diary.getCreateDate();
         }
     }
 
