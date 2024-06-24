@@ -48,7 +48,7 @@ public class CommentController {
     }
 
     @PatchMapping("/comment/{commentId}")
-    public ResponseEntity<?> updateComment(HttpServletRequest request, @PathVariable Long commentId,
+    public ResponseEntity<Result> updateComment(HttpServletRequest request, @PathVariable Long commentId,
                                            @RequestBody CommentUpdateDto commentUpdateDto) {
 
         String userEmail = jwtUtils.getUserEmail(request);
