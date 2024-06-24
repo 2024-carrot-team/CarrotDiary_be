@@ -85,6 +85,7 @@ public class MemberService implements UserDetailsService {
     }
 
     public String findNicknameByEmail(String email) {
-        return  memberRepository.findByEmail(email).orElseThrow(()->new EntityNotFoundException("entity not found")).getNickname();
+      return  memberRepository.findByEmail(email).orElseThrow(()->new EntityNotFoundException("entity not found")).getNickname();
     }
 }
+

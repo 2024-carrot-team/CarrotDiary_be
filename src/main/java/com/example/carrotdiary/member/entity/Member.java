@@ -32,11 +32,13 @@ public class Member extends BaseTimeEntity {
 
     private String password;
     private String nickname;
+    private String snsEndpointArn;
+    private String DeviceToken;
 
-    @OneToMany(mappedBy = "followings", fetch = FetchType.LAZY)
-    private List<Follow> followings;
+    @OneToMany(mappedBy = "followee", fetch = FetchType.LAZY)
+    private List<Follow> followee;
 
-    @OneToMany(mappedBy = "followers", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "follower", fetch = FetchType.LAZY)
     private List<Follow> followers;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -64,5 +66,11 @@ public class Member extends BaseTimeEntity {
         this.image = image;
     }
 
+    public void setSnsEndpointArnInMemberEntity(String snsEndpointArn) {
+        this.snsEndpointArn = snsEndpointArn;
+    }
 
+    public void setDeviceTokenInMemberEntity(String deviceToken) {
+        this.DeviceToken = deviceToken;
+    }
 }

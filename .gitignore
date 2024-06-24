@@ -20,7 +20,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-src/main/resources/application.properties
+src/main/resources/*.properties
 .idea
 *.iws
 *.iml
