@@ -50,7 +50,7 @@ public class MemberController {
     }
 
     @PatchMapping
-    public ResponseEntity<String> updateMember(@RequestBody MemberRequestDto.updateRequestDto memberRequestDto, String email) {
+    public ResponseEntity<String> updateMember(@RequestBody MemberRequestDto.updateRequestDto memberRequestDto, String email) throws IOException {
         memberService.updateMember(email, memberRequestDto);
 
         return ResponseEntity.ok("updated Successfully");

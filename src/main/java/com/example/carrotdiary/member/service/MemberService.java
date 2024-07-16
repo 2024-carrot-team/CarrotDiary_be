@@ -63,10 +63,13 @@ public class MemberService implements UserDetailsService {
     }
 
     //U 수정
-    public void updateMember(String email, MemberRequestDto.updateRequestDto updateRequestDto) {
+    public void updateMember(String email, MemberRequestDto.updateRequestDto updateRequestDto) throws UsernameNotFoundException, IOException {
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("can not find member"));
 
         member.updateMember(updateRequestDto);
+        if(!updateRequestDto.multipartFile().isEmpty()) {
+            member.setImageInMemberEntity(imageService.uploadProfileImage(updateRequestDto.multipartFile(), member));
+        }
 
         MemberResponseDto.fromEntity(member);
     }
