@@ -86,7 +86,7 @@ public class PostController {
         if (userEmail == null) {
             throw new IllegalArgumentException("need login");
         }
-        Result result = postService.updatePost(postId, postRequestDto, image);
+        Result result = postService.updatePost(userEmail, postId, postRequestDto, image);
 
         return ResponseEntity.ok(result);
 
@@ -99,7 +99,7 @@ public class PostController {
         if (userEmail == null) {
             throw new IllegalArgumentException("need login");
         }
-        postService.deletePost(postId);
+        postService.deletePost(userEmail, postId);
 
         return ResponseEntity.noContent().build();
     }

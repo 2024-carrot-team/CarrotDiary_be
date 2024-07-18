@@ -9,24 +9,24 @@ import lombok.NoArgsConstructor;
 public class DiaryRequestDto {
 
     @Getter
-    public static class createDiaryDto {
+    public static class CreateDiaryDto {
         private String content;
 
-        public createDiaryDto(String content) {
+        public CreateDiaryDto(String content) {
             this.content = content;
         }
 
 
     }
     @Getter
-    public static class updateDiaryDto {
+    public static class UpdateDiaryDto {
 
 
         private String content;
         private List<Long> deleteImageIds;
 
 
-        public updateDiaryDto(String content, List<Long> deleteImageIds) {
+        public UpdateDiaryDto(String content, List<Long> deleteImageIds) {
             this.content = content;
             this.deleteImageIds = deleteImageIds;
         }

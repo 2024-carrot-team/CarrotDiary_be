@@ -60,7 +60,9 @@ public class PostService {
     // Post 수정
 
     @Transactional
-    public Result updatePost(Long postId, PostRequestDto postRequestDto, MultipartFile image) throws IOException {
+    public Result updatePost(String userEmail, Long postId, PostRequestDto postRequestDto, MultipartFile image) throws IOException {
+        validateEmail(userEmail, postId);
+
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new NoSuchElementException("조회된 Post 가 없습니다."));
 
@@ -87,12 +89,20 @@ public class PostService {
 
     // Post 삭제
     @Transactional
-    public void deletePost(Long postId) {
+    public void deletePost(String userEmail, Long postId) {
 
+        validateEmail(userEmail, postId);
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new NoSuchElementException("조회된 Post 아이디가 없습니다."));
 
         postRepository.delete(post);
+    }
+
+    private void validateEmail(String userEmail, Long postId) {
+        String emailOfPost = postRepository.findMemberEmailByPostId(postId);
+        if (!userEmail.equals(emailOfPost)) {
+            throw new IllegalArgumentException("권한이 없습니다.");
+        }
     }
 
 }

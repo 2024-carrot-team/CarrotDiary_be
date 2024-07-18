@@ -16,6 +16,9 @@
 [Carrot Diary](https://naraspc.notion.site/Carrot-Diary-c82350f8b48148e9b761111c2074d28b?pvs=74
 ) 
 
+## 배포주소
+플레이마켓 배포 주소 : https://play.google.com/store/apps/details?id=team.carrot
+
 # 🎯 프로젝트 주제, 목표
 
 주제 : 일기를 심어 당근을 키우자! 당근 다이어리 App 프로젝트
