@@ -4,6 +4,7 @@ import com.example.carrotdiary.global.constants.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -36,7 +37,8 @@ public record MemberRequestDto(
             String password,
             String nickname,
             String imageUrl,
-            LocalDateTime birthDayTime
+            LocalDateTime birthDayTime,
+            MultipartFile multipartFile
     ) {}
 
 }

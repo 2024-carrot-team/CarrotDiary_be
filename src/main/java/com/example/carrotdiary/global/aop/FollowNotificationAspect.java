@@ -24,17 +24,17 @@ public class FollowNotificationAspect {
     @Value("${sns.topic.arn}")
     private String topicArn;
 
-    @Pointcut(value = "execution(* com.example.carrotdiary.follow.service.FollowService.follow(..)) && args(followerEmail, followingEmail)", argNames = "followerEmail,followingEmail")
-    public void followMethod(String followerEmail, String followingEmail) {}
+    @Pointcut(value = "execution(* com.example.carrotdiary.follow.service.FollowService.follow(..)) && args(followerEmail, followeeEmail)", argNames = "followerEmail,followeeEmail")
+    public void followMethod(String followerEmail, String followeeEmail) {}
 
-    @AfterReturning(pointcut = "followMethod(followerEmail, followingEmail)", argNames = "followerEmail,followingEmail")
-    public void sendFollowNotification(String followerEmail, String followingEmail) {
+    @AfterReturning(pointcut = "followMethod(followerEmail, followeeEmail)", argNames = "followerEmail,followeeEmail")
+    public void sendFollowNotification(String followerEmail, String followeeEmail) {
 
         // followingEmail을 사용하여 snsEndpointArn 가져오기
-        memberRepository.findByEmail(followingEmail)
+        memberRepository.findByEmail(followeeEmail)
                 .map(Member::getSnsEndpointArn)
                 .ifPresent(
-                        snsEndpointArn -> notificationService.sendFollowNotification(snsEndpointArn, followerEmail, followingEmail));
+                        snsEndpointArn -> notificationService.sendFollowNotification(snsEndpointArn, followerEmail, followeeEmail));
 
     }
 
