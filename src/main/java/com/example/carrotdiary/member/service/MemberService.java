@@ -67,7 +67,7 @@ public class MemberService implements UserDetailsService {
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("can not find member"));
 
         member.updateMember(updateRequestDto);
-        if(!updateRequestDto.multipartFile().isEmpty()) {
+        if (updateRequestDto.multipartFile() != null && ! updateRequestDto.multipartFile().isEmpty()) {
             member.setImageInMemberEntity(imageService.uploadProfileImage(updateRequestDto.multipartFile(), member));
         }
 
