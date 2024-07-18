@@ -1,6 +1,7 @@
 package com.example.carrotdiary.postdiary.dto;
 
 import com.example.carrotdiary.diary.dto.DiaryMainFlatDto;
+import com.example.carrotdiary.postdiary.entity.Visibility;
 import com.querydsl.core.annotations.QueryProjection;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +19,17 @@ public class PostDiaryFlatDto {
     private String memberProfileImageUrl;
     private Long postId;
     private Long postDiaryId;
+    private Visibility visibility;
     private List<DiaryMainFlatDto> diaries = new ArrayList<>();
 
     @QueryProjection
-    public PostDiaryFlatDto(Long postDiaryId, Long postId, Long memberId, String nickname, String memberProfileImageUrl) {
+    public PostDiaryFlatDto(Long memberId, String nickname, String memberProfileImageUrl,
+                            Long postId, Long postDiaryId, Visibility visibility) {
         this.memberId = memberId;
         this.nickname = nickname;
         this.memberProfileImageUrl = memberProfileImageUrl;
         this.postId = postId;
         this.postDiaryId = postDiaryId;
+        this.visibility = visibility;
     }
 }

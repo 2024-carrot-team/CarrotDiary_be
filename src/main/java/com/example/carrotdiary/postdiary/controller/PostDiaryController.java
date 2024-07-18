@@ -2,10 +2,14 @@ package com.example.carrotdiary.postdiary.controller;
 
 import com.example.carrotdiary.global.common.Result;
 import com.example.carrotdiary.global.jwt.JwtUtils;
+import com.example.carrotdiary.member.entity.Member;
+import com.example.carrotdiary.member.repository.MemberRepository;
 import com.example.carrotdiary.postdiary.dto.PostDiaryRequestDto.PostDiarySearchDto;
 import com.example.carrotdiary.postdiary.dto.PostDiaryResponseDto.PostDiaryIdDto;
+import com.example.carrotdiary.postdiary.entity.Visibility;
 import com.example.carrotdiary.postdiary.service.PostDiaryService;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,16 +27,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostDiaryController {
 
     private final PostDiaryService postDiaryService;
+    private final MemberRepository memberRepository;
     private final JwtUtils jwtUtils;
 
     @PostMapping("/postDiary/{postId}")
-    public ResponseEntity<PostDiaryIdDto> createPostDiary(HttpServletRequest req, @PathVariable("postId") Long postId) {
+    public ResponseEntity<PostDiaryIdDto> createPostDiary(HttpServletRequest req, @PathVariable("postId") Long postId,
+                                                          @RequestParam Visibility visibility) {
 
         String userEmail = jwtUtils.getUserEmail(req);
         if (userEmail == null) {
             throw new IllegalArgumentException("need login");
         }
-        PostDiaryIdDto postDiaryId = postDiaryService.createPostDiary(postId);
+        PostDiaryIdDto postDiaryId = postDiaryService.createPostDiary(postId, visibility);
 
         return ResponseEntity.ok(postDiaryId);
 
@@ -46,8 +52,10 @@ public class PostDiaryController {
         if (userEmail == null) {
             throw new IllegalArgumentException("need login");
         }
+        Member currentMember = memberRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new NoSuchElementException("조회된 Member 없습니다."));
 
-        Result mainPostDiaries = postDiaryService.getMainPostDiaries(page, size);
+        Result mainPostDiaries = postDiaryService.getMainPostDiaries(page, size, currentMember);
 
         return ResponseEntity.ok(mainPostDiaries);
     }
@@ -63,10 +71,12 @@ public class PostDiaryController {
         if (userEmail == null) {
             throw new IllegalArgumentException("need login");
         }
+        Member currentMember = memberRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new NoSuchElementException("조회된 Member 없습니다."));
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Result postDiariesBySearch = postDiaryService.getPostDiariesBySearch(postDiarySearchDto, pageable);
+        Result postDiariesBySearch = postDiaryService.getPostDiariesBySearch(postDiarySearchDto, pageable, currentMember);
 
         return ResponseEntity.ok(postDiariesBySearch);
     }

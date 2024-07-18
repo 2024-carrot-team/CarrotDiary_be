@@ -1,12 +1,14 @@
 package com.example.carrotdiary.postdiary.service;
 
 import com.example.carrotdiary.global.common.Result;
+import com.example.carrotdiary.member.entity.Member;
 import com.example.carrotdiary.post.entity.Post;
 import com.example.carrotdiary.post.repository.PostRepository;
 import com.example.carrotdiary.postdiary.dto.PostDiaryFlatDto;
 import com.example.carrotdiary.postdiary.dto.PostDiaryRequestDto.PostDiarySearchDto;
 import com.example.carrotdiary.postdiary.dto.PostDiaryResponseDto.PostDiaryIdDto;
 import com.example.carrotdiary.postdiary.entity.PostDiary;
+import com.example.carrotdiary.postdiary.entity.Visibility;
 import com.example.carrotdiary.postdiary.repository.PostDiaryRepository;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,11 +27,11 @@ public class PostDiaryService {
     private final PostDiaryRepository postDiaryRepository;
 
     // 등록
-    public PostDiaryIdDto createPostDiary(Long postId) {
+    public PostDiaryIdDto createPostDiary(Long postId, Visibility visibility) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new NoSuchElementException("조회된 Post가 없습니다."));
 
-        PostDiary postDiary = PostDiary.addPostDiary(post);
+        PostDiary postDiary = PostDiary.addPostDiary(post, visibility);
 
         postDiaryRepository.save(postDiary);
 
@@ -46,10 +48,10 @@ public class PostDiaryService {
     }
 
     @Transactional
-    public Result getMainPostDiaries(int page, int size) {
+    public Result getMainPostDiaries(int page, int size, Member currentMember) {
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<PostDiaryFlatDto> allPostDiaries = postDiaryRepository.findAllPostDiariesPaging(pageable);
+        Page<PostDiaryFlatDto> allPostDiaries = postDiaryRepository.findAllPostDiariesPaging(pageable, currentMember);
 
         List<PostDiaryFlatDto> result = allPostDiaries.getContent();
 
@@ -57,9 +59,9 @@ public class PostDiaryService {
     }
 
     @Transactional
-    public Result getPostDiariesBySearch(PostDiarySearchDto postDiarySearchDto, Pageable pageable) {
+    public Result getPostDiariesBySearch(PostDiarySearchDto postDiarySearchDto, Pageable pageable, Member currentMember) {
         Page<PostDiaryFlatDto> postDiaryBySearch = postDiaryRepository.findPostDiaryBySearch(postDiarySearchDto.getDiarySearch(),
-                postDiarySearchDto.getSearchContent(), pageable);
+                postDiarySearchDto.getSearchContent(), pageable, currentMember);
 
         List<PostDiaryFlatDto> result = postDiaryBySearch.getContent();
 
