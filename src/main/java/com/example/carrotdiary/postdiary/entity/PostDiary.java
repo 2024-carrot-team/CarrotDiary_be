@@ -8,6 +8,8 @@ import com.example.carrotdiary.post.entity.Post;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,6 +32,9 @@ public class PostDiary extends BaseTimeEntity {
     @Column(name = "post_diary_id")
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private Visibility visibility;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
@@ -44,8 +49,9 @@ public class PostDiary extends BaseTimeEntity {
     }
 
     // 생성 메서드
-    public static PostDiary addPostDiary(Post post) {
+    public static PostDiary addPostDiary(Post post, Visibility visibility) {
         PostDiary postDiary = new PostDiary();
+        postDiary.visibility = visibility;
         postDiary.setPost(post);
 
         return postDiary;
