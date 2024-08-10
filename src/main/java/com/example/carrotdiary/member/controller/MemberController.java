@@ -50,10 +50,14 @@ public class MemberController {
     }
 
     @PatchMapping
-    public ResponseEntity<String> updateMember(@RequestBody MemberRequestDto.updateRequestDto memberRequestDto, String email) throws IOException {
-        memberService.updateMember(email, memberRequestDto);
+    public ResponseEntity<String> updateMember(
+            @RequestPart("data") MemberRequestDto.updateRequestDto memberRequestDto,
+            @RequestPart(value = "file", required = false) MultipartFile multipartFile,
+            @RequestParam String email) throws IOException {
 
-        return ResponseEntity.ok("updated Successfully");
+        memberService.updateMember(email, memberRequestDto, multipartFile);
+
+        return ResponseEntity.ok("Updated Successfully");
     }
 
     @DeleteMapping
