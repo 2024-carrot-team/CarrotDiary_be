@@ -52,10 +52,9 @@ public class MemberController {
     @PatchMapping
     public ResponseEntity<String> updateMember(
             @RequestPart("data") MemberRequestDto.updateRequestDto memberRequestDto,
-            @RequestPart(value = "file", required = false) MultipartFile multipartFile,
-            @RequestParam String email) throws IOException {
+            @RequestPart(value = "file", required = false) MultipartFile multipartFile) throws IOException {
 
-        memberService.updateMember(email, memberRequestDto, multipartFile);
+        memberService.updateMember(memberRequestDto.email(), memberRequestDto, multipartFile);
 
         return ResponseEntity.ok("Updated Successfully");
     }

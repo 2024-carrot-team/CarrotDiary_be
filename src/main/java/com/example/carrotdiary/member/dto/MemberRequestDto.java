@@ -4,7 +4,6 @@ import com.example.carrotdiary.global.constants.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -33,7 +32,10 @@ public record MemberRequestDto(
     ) {}
 
     public record updateRequestDto(
+            @Email
             String email,
+            @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,16}$",
+                    message = "비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
             String password,
             String nickname,
             String imageUrl,
