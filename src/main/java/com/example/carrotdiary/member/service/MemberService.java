@@ -63,17 +63,16 @@ public class MemberService implements UserDetailsService {
     }
 
     //U 수정
-    public void updateMember(String email, MemberRequestDto.updateRequestDto updateRequestDto) throws UsernameNotFoundException, IOException {
+    public void updateMember(String email, MemberRequestDto.updateRequestDto updateRequestDto, MultipartFile multipartFile) throws UsernameNotFoundException, IOException {
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("can not find member"));
 
         member.updateMember(updateRequestDto);
-        if(!updateRequestDto.multipartFile().isEmpty()) {
-            member.setImageInMemberEntity(imageService.uploadProfileImage(updateRequestDto.multipartFile(), member));
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            member.setImageInMemberEntity(imageService.uploadProfileImage(multipartFile, member));
         }
 
         MemberResponseDto.fromEntity(member);
     }
-
     //D 삭제
 
     public void deleteMember(String email) {

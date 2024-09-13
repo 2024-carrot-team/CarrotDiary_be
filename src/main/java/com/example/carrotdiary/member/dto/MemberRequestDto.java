@@ -37,8 +37,7 @@ public record MemberRequestDto(
             String password,
             String nickname,
             String imageUrl,
-            LocalDateTime birthDayTime,
-            MultipartFile multipartFile
+            LocalDateTime birthDayTime
     ) {}
 
 }
